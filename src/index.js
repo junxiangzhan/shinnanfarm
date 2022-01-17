@@ -10,6 +10,7 @@ app.get( '/', function ( req, res ) {
     res.end();
 });
 
-app.listen( process.env.port ?? 5000, function () {
-    console.log( `Your app is listening on port ${ process.env.port ?? 5000 }.` );
+const port = process.env.PORT ?? 5000;
+app.listen( port, function () {
+    console.log( `Your app is listening on port ${ process.env.port ?? port }.` );
 });
