@@ -1,10 +1,11 @@
 {
   "name": "shinnan",
   "version": "1.0.0",
-  "main": "build/bundle.js",
+  "main": "index.js",
   "author": "junxiangzhan <h812645@hshs.tyc.edu.tw>",
   "license": "MIT",
   "scripts": {
+    "start": "node build/bundle.js",
     "dev": "npm-run-all -p dev:run dev:build:*",
     "dev:run": "nodemon --inspect build/bundle.js",
     "dev:build:client": "webpack -c webpack.client.js -w",
