@@ -1,13 +1,18 @@
 import express from "express";
-import path from "path";
+import fs from "fs";
+
+import React from "react";
+import { renderToString } from "react-dom/server";
 
 const app = express();
 
 app.use( express.static( '/public' ));
 
 app.get( '/', function ( req, res ) {
-    res.send('hello, world');
-    res.end();
+    return fs.readFile( '/build/index.html', function ( err, data ) {
+        if ( err ) throw err;
+        res.end( data.toString().replaceAll( '{{ content }}', renderToString( <div>Hello, World</div>)))
+    });
 });
 
 const port = process.env.PORT ?? 5000;
