@@ -1,4 +1,15 @@
 {
+  "name": "shinnan",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "junxiangzhan <h812645@hshs.tyc.edu.tw>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "npm-run-all -p dev:run dev:build:*",
+    "dev:run": "nodemon --inspect build/bundle.js",
+    "dev:build:client": "webpack -c webpack.client.js -w",
+    "dev:build:server": "webpack -c webpack.server.js -w"
+  },
   "dependencies": {
     "express": "^4.17.2",
     "react": "^17.0.2",
@@ -9,9 +20,11 @@
     "@babel/core": "^7.16.7",
     "@babel/preset-env": "^7.16.8",
     "@babel/preset-react": "^7.16.7",
+    "babel-loader": "^8.2.3",
     "nodemon": "^2.0.15",
     "npm-run-all": "^4.1.5",
     "webpack": "^5.66.0",
-    "webpack-cli": "^4.9.1"
+    "webpack-cli": "^4.9.1",
+    "webpack-node-externals": "^3.0.0"
   }
 }
