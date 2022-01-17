@@ -1,7 +1,7 @@
 {
   "name": "shinnan",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "build/bundle.js",
   "author": "junxiangzhan <h812645@hshs.tyc.edu.tw>",
   "license": "MIT",
   "scripts": {
