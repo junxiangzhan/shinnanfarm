@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "start": "node build/bundle.js",
-    "heroku-postbuild": "webpack -c webpack.server.js -w",
+    "heroku-postbuild": "webpack -c webpack.server.js",
     "dev": "npm-run-all -p dev:run dev:build:*",
     "dev:run": "nodemon --inspect build/bundle.js",
     "dev:build:client": "webpack -c webpack.client.js -w",
