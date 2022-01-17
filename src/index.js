@@ -25,8 +25,8 @@ app.get( '*', function ( req, res ) {
             )
         };
 
-        return res.end( Object.entries( replacement ).reduce( function ( prev, { key, value }) {
-            return prev.replaceAll( `{{ ${key} }}`, value );
+        return res.end( Object.entries( replacement ).reduce( function ( prev, [ key, value ]) {
+            return prev.replaceAll( `{{ ${ key } }}`, value );
         }, content ));
     });
 });
