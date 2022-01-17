@@ -10,6 +10,6 @@ app.get( '/', function ( req, res ) {
     res.end();
 });
 
-app.listen( process.env.port ?? 3000, function () {
-    console.log( `Your app is listening on port ${ process.env.port ?? 3000 }.`, __dirname );
+app.listen( process.env.port ?? 5000, function () {
+    console.log( `Your app is listening on port ${ process.env.port ?? 5000 }.`, __dirname );
 });
