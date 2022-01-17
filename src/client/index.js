@@ -1,7 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter } from "react-router-dom";
 
-ReactDOM.render(
-    <>Hello, World</>,
-    document.querySelector('[data-reactroot]')
-)
+import App from './components/app';
+
+ReactDOM.hydrate(
+    <BrowserRouter>
+        <App />
+    </BrowserRouter>,
+    document.querySelector( '[data-reactroot]' )
+);
