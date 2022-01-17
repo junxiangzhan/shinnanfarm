@@ -19,5 +19,5 @@ app.get( '*', function ( req, res ) {
 const port = process.env.PORT ?? 5000;
 app.listen( port, function () {
     console.log( `Your app is listening on port ${ process.env.port ?? port }.` );
-    console.log( path.resolve( __dirname, '/public'), path.join( __dirname, '/build/index.html' );
+    console.log( path.resolve( __dirname, '/public' ), path.join( __dirname, '/build/index.html' ));
 });
