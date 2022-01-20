@@ -1,17 +1,31 @@
+import axios from "axios";
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 
 import Navbar from "./components/navbar";
-import HomePage from "./pages/homepage";
+import routes from "./routes";
 
 export default class App extends React.Component {
+    constructor ( props ) {
+        super( props );
+    }
+
+    sendRequest ( config, callback, onerror ) {
+        axios.request( config ).then( callback ).then( onerror );
+    }
+
     render () {
         return <>
             <Navbar />
-            <Routes>
-                <Route exact path="/" element={ <HomePage /> }/>
-                <Route path="/market" element={ "Market" }/>
-            </Routes>
+            { renderRoutes( routes ) }
         </>;
     }
+}
+
+function renderRoutes ( routes ) {
+    return <Routes>
+        { routes.map( function ({ component: Component, ...props }, index ) {
+            return <Route key={ index } element={ <Component /> } { ...props } />
+        })}
+    </Routes>
 }

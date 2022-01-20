@@ -124,6 +124,11 @@ body {
   margin: 0;
 }
 
+.reserve {
+  height: calc(64px + 2rem);
+}
+
+/* navbar */
 #navbar {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -159,12 +164,19 @@ body {
 }
 
 #navbar .navbar-brand {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 3rem;
+  padding: 0 .5rem;
+  color: #222;
   font-size: 1.3333rem;
   font-weight: 500;
-  text-decoration: none;
-  color: #222;
   letter-spacing: .05em;
-  padding: 0 .5rem;
+  text-decoration: none;
 }
 
 #navbar .navbar-toggler {

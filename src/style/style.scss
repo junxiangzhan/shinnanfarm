@@ -115,6 +115,12 @@ body {
     margin: 0;
 }
 
+.reserve {
+    height: calc(64px + 2rem);
+}
+
+/* navbar */
+
 #navbar {
     display: flex;
     justify-content: center;
@@ -138,12 +144,15 @@ body {
         }
 
         &-brand {
+            display: flex;
+            align-items: center;
+            height: 3rem;
+            padding: 0 .5rem;
+            color: #222;
             font-size: 1.3333rem;
             font-weight: 500;
-            text-decoration: none;
-            color: #222;
             letter-spacing: .05em;
-            padding: 0 .5rem;
+            text-decoration: none;
         }
 
         &-toggler {
