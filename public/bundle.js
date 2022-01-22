@@ -2894,15 +2894,15 @@ class Market extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: store.goodlists
+      data: _store__WEBPACK_IMPORTED_MODULE_1__["default"].goodlists
     };
     this.componentDidMount = this.componentDidMount.bind(this);
   }
 
   componentDidMount() {
-    store.request('goodlists').then(function () {
+    _store__WEBPACK_IMPORTED_MODULE_1__["default"].request('goodlists').then(function () {
       this.setState({
-        data: store.goodlists
+        data: _store__WEBPACK_IMPORTED_MODULE_1__["default"].goodlists
       });
     }.bind(this));
   }
@@ -2918,7 +2918,7 @@ class Market extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
 }
 
 Market.getInitialData = async function () {
-  return store.request('goodlists');
+  return _store__WEBPACK_IMPORTED_MODULE_1__["default"].request('goodlists');
 };
 
 /***/ }),
