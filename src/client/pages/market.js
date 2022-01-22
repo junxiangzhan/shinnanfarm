@@ -1,5 +1,6 @@
 import React from "react";
-import store from "../store";
+
+import Store from "../store";
 
 export default class Market extends React.Component {
     constructor ( props ) {

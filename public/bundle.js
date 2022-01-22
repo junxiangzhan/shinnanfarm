@@ -2894,15 +2894,15 @@ class Market extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: _store__WEBPACK_IMPORTED_MODULE_1__["default"].goodlists
+      data: store.goodlists
     };
     this.componentDidMount = this.componentDidMount.bind(this);
   }
 
   componentDidMount() {
-    _store__WEBPACK_IMPORTED_MODULE_1__["default"].request('goodlists').then(function () {
+    store.request('goodlists').then(function () {
       this.setState({
-        data: _store__WEBPACK_IMPORTED_MODULE_1__["default"].goodlists
+        data: store.goodlists
       });
     }.bind(this));
   }
@@ -2918,7 +2918,7 @@ class Market extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
 }
 
 Market.getInitialData = async function () {
-  return _store__WEBPACK_IMPORTED_MODULE_1__["default"].request('goodlists');
+  return store.request('goodlists');
 };
 
 /***/ }),
@@ -3011,7 +3011,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((function store() {
   const store = {};
   const configs = {
-    userlist: {
+    goodlists: {
       url: 'https://reqres.in/api/users?page=1',
       method: 'get'
     }

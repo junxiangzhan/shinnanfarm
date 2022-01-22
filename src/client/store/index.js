@@ -3,7 +3,7 @@ import axios from "axios";
 export default (function store () {
     const store = {};
     const configs = {
-        userlist: {
+        goodlists: {
             url: 'https://reqres.in/api/users?page=1',
             method: 'get'
         }
