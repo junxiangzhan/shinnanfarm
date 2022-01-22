@@ -5,8 +5,10 @@ import { BrowserRouter } from "react-router-dom";
 import App from './app';
 
 ReactDOM.hydrate(
-    <BrowserRouter>
-        <App />
-    </BrowserRouter>,
+    <React.StrictMode>
+        <BrowserRouter>
+            <App />
+        </BrowserRouter>
+    </React.StrictMode>,
     document.querySelector( '[data-reactroot]' )
 );

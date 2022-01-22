@@ -25,6 +25,9 @@ class SectionHeader extends React.Component {
                 
             </div>
         </Carousel>
+        <div className="content">
+            <img src="images/white_vertical.svg" />
+        </div>
     </section>;
     }
 }

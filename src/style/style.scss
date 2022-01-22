@@ -153,6 +153,10 @@ body {
             font-weight: 500;
             letter-spacing: .05em;
             text-decoration: none;
+
+            img {
+                height: 100%;
+            }
         }
 
         &-toggler {
@@ -346,6 +350,7 @@ body {
     }
 
     .header {
+        position: relative;
         padding: 0;
 
         .img {
@@ -366,6 +371,23 @@ body {
     
             &.active {
                 transform: scale(1);
+            }
+        }
+
+        .content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100vh;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 5;
+
+            img {
+                width: calc(var(--font-h1) * 10);
+                filter: var(--depth-16-filter) var(--depth-16-filter) var(--depth-16-filter) var(--depth-16-filter);
             }
         }
     }

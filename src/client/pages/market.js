@@ -1,34 +1,33 @@
 import React from "react";
+import store from "../store";
 
 export default class Market extends React.Component {
     constructor ( props ) {
         super ( props );
         
-        this.getInitialData = this.getInitialData.bind( this );
+        this.state = {
+            data: store.goodlists
+        };
+
         this.componentDidMount = this.componentDidMount.bind( this );
     }
 
     componentDidMount () {
-        
+        store.request( 'goodlists' ).then( function () {
+            this.setState( {
+                data: store.goodlists
+            });
+        }.bind( this ));
     }
 
     render () {
         return <div id="market">
             <div className="reserve"></div>
-            Market
+            { JSON.stringify( this.state.data ) }
         </div>
     }
 }
 
-Market.getInitialData = async function getInitialData () {
-    return await this.sendRequest( {
-        url: 'https://reqres.in/api/users?page=2',
-        method: 'get'
-    }, function ( response ) {
-        this.setState({
-            goods: response.data
-        });
-    }.bind( this ), function ( error ) {
-        throw error;
-    });
+Market.getInitialData = async function () {
+    return store.request( 'goodlists' );
 }

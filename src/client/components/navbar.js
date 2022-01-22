@@ -54,7 +54,7 @@ export default class Navbar extends React.Component {
     render () {
         return <nav id="navbar" role="navigation">
             <div className="navbar-container">
-                <Link to="/" className="navbar-brand">新南智慧農園</Link>
+                <Link to="/" className="navbar-brand"><img src="/images/brand.svg" alt="新南智慧農園" /></Link>
                 <button { ...this.togglerProps() }>
                     <span className="navbar-toggler-icon"></span>
                 </button>

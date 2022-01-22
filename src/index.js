@@ -7,38 +7,44 @@ import ReactDOMServer from "react-dom/server";
 import { StaticRouter } from "react-router-dom/server";
 
 import App from "./client/app";
+import routes from "./client/routes";
 
 const app = express();
 
 app.disable( 'x-powered-by' );
-
-app.use( express.static( 'public' ));
 
 app.use( function ( req, res, next ) {
     res.set( 'x-content-type-options', 'nosniff' );
     next();
 });
 
+app.use( express.static( 'public' ));
+
 app.get( '*', function ( req, res ) {
     return fs.readFile( path.resolve( __dirname, 'index.html' ), function ( err, data ) {
         if ( err ) throw err;
 
-        res.set( 'content-type', 'text/html;charset=utf-8')
+        res.set( 'content-type', 'text/html;charset=utf-8');
 
-        const content = data.toString();
-        const replacement = {
-            content: ReactDOMServer.renderToString(
-                <div>
-                    <StaticRouter location={ req.path }>
-                        <App />
-                    </StaticRouter>
-                </div>
-            )
-        };
+        return Promise.all( routes.matchRoutes( req.path ).map( function ({ component }) {
+            return component.getInitialData && component.getInitialData();  
+        })).then( function () {
+            const content = data.toString();
+            const replacement = {
+                base: path.relative( req.path, "/" ) || '.',
+                content: ReactDOMServer.renderToString(
+                    <div>
+                        <StaticRouter location={ req.path }>
+                            <App />
+                        </StaticRouter>
+                    </div>
+                )
+            };
 
-        return res.end( Object.entries( replacement ).reduce( function ( prev, [ key, value ]) {
-            return prev.replaceAll( `{{ ${ key } }}`, value );
-        }, content ));
+            return res.end( Object.entries( replacement ).reduce( function ( prev, [ key, value ]) {
+                return prev.replaceAll( `{{ ${ key } }}`, value );
+            }, content ));
+        });
     });
 });
 
