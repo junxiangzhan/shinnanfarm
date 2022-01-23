@@ -5,8 +5,8 @@ import { BrowserRouter } from "react-router-dom";
 import routes from './routes';
 import App from './app';
 
-Promise.all( routes.matchRoutes( location.pathname ).map( function ([{ component }, info ]) {
-    return component.getInitialData && component.getInitialData( info );  
+Promise.all( matchRoutes( routes ).map( function ({ params, route: { element: { type }}}) {
+    return type?.getInitialData && type?.getInitialData( params );
 })).then( function () {
     ReactDOM.hydrate(
         <React.StrictMode>

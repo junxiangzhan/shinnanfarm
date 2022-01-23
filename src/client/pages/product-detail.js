@@ -17,6 +17,6 @@ export default function GoodDetail () {
     </div>;
 }
 
-GoodDetail.getInitialData = async function ( { params: { id } }) {
+GoodDetail.getInitialData = async function ({ id }) {
     return store.request( 'productDetail', id );
 }

@@ -4,6 +4,7 @@ import path from "path";
 
 import React from "react";
 import ReactDOMServer from "react-dom/server";
+import { matchRoutes, useRoutes } from 'react-router-dom';
 import { StaticRouter } from "react-router-dom/server";
 
 import App from "./client/app";
@@ -17,8 +18,8 @@ export default function ( req, res ) {
 
         res.set( 'content-type', 'text/html;charset=utf-8');
 
-        return Promise.all( routes.matchRoutes( req.path ).map( function ([{ component }, info ]) {
-            return component.getInitialData && component.getInitialData( info );  
+        return Promise.all( matchRoutes( routes, req.path ).map( function ({ params, route: { element }}) {
+            return element?.type.getInitialData && element.type.getInitialData( params );
         })).then( function () {
             const content = data.toString();
             const replacement = {
