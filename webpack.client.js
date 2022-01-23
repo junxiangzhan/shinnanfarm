@@ -3,7 +3,7 @@ const path = require("path");
 module.exports = {
     target: "node",
     entry: "./src/client/index.js",
-    mode: "development",
+    mode: process.env.NODE_ENV ?? "development",
     devtool: "source-map",
 
     output: {
