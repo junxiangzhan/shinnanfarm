@@ -34,7 +34,7 @@ apis.product = function ( req, res ) {
     const { params, query } = req;
     switch ( params.arg ) {
         case 'all':
-            return res.send( productList );
+            return res.send( JSON.stringify( productList ));
         case 'detail':
             if ( query.id == null ) return res.send({
                 type: 'error',
@@ -42,18 +42,18 @@ apis.product = function ( req, res ) {
                 message: `The id argument must be given, but get ${ query.id }.`
             });
 
-            return res.send( detailList[ query.id ] ?? {
+            return res.send( JSON.stringify( detailList[ query.id ] ?? {
                 type: 'error',
                 code: '404',
                 message: `Product Id: ${ query.id }, has not found.`
-            });
+            }));
 
         default:
-            return res.send({
+            return res.send( JSON.stringify({
                 type: 'error',
                 code: '405',
                 message: `The undefined method has been given.`
-            });
+            }));
     }
 
 }.bind( apis );
