@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Carousel, CarouselItem } from "../components/carousel";
+import Carousel from "../components/carousel";
 
 export default class HomePage extends React.Component {
     render () {

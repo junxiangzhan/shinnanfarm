@@ -1,27 +1,38 @@
 import axios from "axios";
 
-export default (function store () {
-    const store = {};
+const store = (function () {
     const configs = {
-        goodlists: {
-            url: 'https://reqres.in/api/users?page=1',
+        productList: {
+            url: 'api/product/all',
             method: 'get'
+        },
+
+        productDetail ( id ) {
+            return {
+                url: `api/product/detail?id=${ id }`,
+                method: 'get'
+            };
         }
     };
 
-    store.init = function () {
-        return Object.entries( configs ).map( function ([ name ]) {
-            return store[ name ] = {};
-        });
-    }.bind( store );
+    const store = {
+        async request ( name, ...arg ) {
+            const config = configs[ name ] instanceof Function ? configs[ name ]( ...arg ): configs[ name ];
+            return await axios.request( config ).then( function ( response ) {
+                return Object.assign( store[ name ], response.data );
+            }.bind( this ));
+        },
 
-    store.request = async function ( name ) {
-        return await axios.request( configs[ name ] ).then( function ( response ) {
-            return Object.assign( store[ name ], response.data );
-        }.bind( this ));
-    }.bind( store );
+        init () {
+            return Object.entries( configs ).map( function ([ name ]) {
+                return store[ name ] = {};
+            });
+        }
+    };
     
     store.init();
 
     return store;
-})()
+})();
+
+export default store;

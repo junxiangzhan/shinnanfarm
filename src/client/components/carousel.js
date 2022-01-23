@@ -1,6 +1,49 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-export class Carousel extends React.Component {
+function Carousel ({ children, interval, className, ...props }) {
+    
+    const items = children.filter( element => element );
+    const timeout = interval ?? 5000;
+
+    const [ current, setCurrent ] = useState( 0 );
+    const [ isAnimating, setAnimating ] = useState( false );
+    const [ intervalObject, setIntervalObject ] = useState( null );
+
+    setIntervalObject( setInterval( function nextTurn () {
+        setCurrent( ++current == items.length ? 0 : current );
+        setAnimating( true );
+    }, timeout ));
+
+    useEffect( function componentDidMount () {
+        if ( !isAnimating ) setTimeout( function () {
+            setAnimating( false );
+        }, 600 )
+
+        return function componentWillUnMount () {
+            clearInterval( intervalObject );
+        }
+    }, [ isAnimating ]);
+
+    return <div className={[ 'carousel', className ].filter( Boolean ).join(" ")} { ...props }>
+        <div className="carousel-inner">
+            { items.map( function ( item, index ) {
+                const className = [
+                    "carousel-item",
+                    current == index && "active",
+                    (current == items.length - 1 ? 0 : current + 1) == index && "next",
+                    isAnimating && (current || items.length) - 1 == index && "animating",
+                    isAnimating && current == index && "animating",
+                ].filter(Boolean).join(" ");
+
+                return <div className={ className } key={ index }>
+                    { item }
+                </div>;
+            }) }
+        </div>
+    </div>;
+}
+
+export default class _Carousel extends React.Component {
     constructor(props) {
         super(props);
 

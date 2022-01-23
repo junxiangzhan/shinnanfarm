@@ -7,16 +7,16 @@ export default class Market extends React.Component {
         super ( props );
         
         this.state = {
-            data: store.goodlists
+            data: store.productList
         };
 
         this.componentDidMount = this.componentDidMount.bind( this );
     }
 
     componentDidMount () {
-        store.request( 'goodlists' ).then( function () {
+        store.request( 'productList' ).then( function () {
             this.setState( {
-                data: store.goodlists
+                data: store.productList
             });
         }.bind( this ));
     }
@@ -30,5 +30,5 @@ export default class Market extends React.Component {
 }
 
 Market.getInitialData = async function () {
-    return store.request( 'goodlists' );
+    return store.request( 'productList' );
 }

@@ -1,6 +1,7 @@
 import React from "react";
 import { Route, Routes, matchPath } from "react-router-dom";
 
+import ProdcutDetail from "../pages/product-detail";
 import HomePage from "../pages/homepage";
 import Market from "../pages/market";
 
@@ -14,12 +15,12 @@ routes.renderRoutes = function ({ routes = this }) {
     </Routes>
 }.bind( routes );
 
-routes.matchRoutes = function matchRoutes ( rawPath, routes = this, root = "" ) {
+routes.matchRoutes = function ( rawPath, routes = this, root = "" ) {
     return routes.reduce( function ( matches, route ) {
         const comparePath = `${root}/${route.path}`.replaceAll( /\//gm, '//' ).replaceAll( /\/:.*?\//gm, '/*/' ).replaceAll( /\/+/gm, '/' );
 
         if ( matchPath( comparePath, rawPath ) ) {
-            matches.push( route );
+            matches.push([ route, matchPath( comparePath, rawPath )]);
 
             if ( route.component == this.renderRoutes ) {
                 matches.push( ...this.matchRoutes( rawPath, route.componentProps.routes, comparePath.substring( 0, comparePath.length - 2 ) ) );
@@ -41,6 +42,9 @@ export default Object.assign( routes, [ {
         routes: [ {
             path: '/',
             component: Market
+        }, {
+            path: '/:id',
+            component: ProdcutDetail
         }]
     }
 }]);

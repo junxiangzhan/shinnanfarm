@@ -1,13 +1,7 @@
 import express from "express";
-import fs from "fs";
-import path from "path";
 
-import React from "react";
-import ReactDOMServer from "react-dom/server";
-import { StaticRouter } from "react-router-dom/server";
-
-import App from "./client/app";
-import routes from "./client/routes";
+import apis from "./apis";
+import defaultRoute from "./default";
 
 const app = express();
 
@@ -20,33 +14,14 @@ app.use( function ( req, res, next ) {
 
 app.use( express.static( 'public' ));
 
-app.get( '*', function ( req, res ) {
-    return fs.readFile( path.resolve( __dirname, 'index.html' ), function ( err, data ) {
-        if ( err ) throw err;
+app.get([ 
+    '/api',
+    '/api/:method',
+    '/api/:method/:arg',
+    '/api/*'
+], apis );
 
-        res.set( 'content-type', 'text/html;charset=utf-8');
-
-        return Promise.all( routes.matchRoutes( req.path ).map( function ({ component }) {
-            return component.getInitialData && component.getInitialData();  
-        })).then( function () {
-            const content = data.toString();
-            const replacement = {
-                base: path.relative( req.path, "/" ) || '.',
-                content: ReactDOMServer.renderToString(
-                    <div>
-                        <StaticRouter location={ req.path }>
-                            <App />
-                        </StaticRouter>
-                    </div>
-                )
-            };
-
-            return res.end( Object.entries( replacement ).reduce( function ( prev, [ key, value ]) {
-                return prev.replaceAll( `{{ ${ key } }}`, value );
-            }, content ));
-        });
-    });
-});
+app.get( '*', defaultRoute );
 
 const port = process.env.PORT ?? 5000;
 app.listen( port, function () {
