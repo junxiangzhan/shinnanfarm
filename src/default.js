@@ -9,7 +9,9 @@ import { StaticRouter } from "react-router-dom/server";
 import App from "./client/app";
 import routes from "./client/routes";
 
-axios.defaults.baseURL = 'http://localhost:5000';
+console.log(process.env)
+
+axios.defaults.baseURL = process.env.HOST ?? 'http://localhost:5000';
 
 export default function ( req, res ) {
     return fs.readFile( path.resolve( __dirname, 'index.html' ), function ( err, data ) {
