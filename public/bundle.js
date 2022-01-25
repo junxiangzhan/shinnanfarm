@@ -3013,6 +3013,7 @@ __webpack_require__.r(__webpack_exports__);
 
 function ProductList(props) {
   const [productList, setProductList] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(_store__WEBPACK_IMPORTED_MODULE_1__["default"].productList);
+  console.log(productList);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function componentDidMount() {
     _store__WEBPACK_IMPORTED_MODULE_1__["default"].request('productList').then(setProductList);
   }, []);
@@ -3109,20 +3110,19 @@ const store = function () {
     async request(name, ...arg) {
       const config = configs[name] instanceof Function ? configs[name](...arg) : configs[name];
       return await axios__WEBPACK_IMPORTED_MODULE_0___default().request(config).then(function (response) {
-        return Object.assign(store[name], response.data);
+        Object.assign(store, {
+          name: response.data
+        });
+        return response.data;
       }.bind(this));
     },
 
     init() {
       return Object.entries(configs).map(function ([name]) {
-        return store[name] = {};
+        return store[name] = null;
       });
-    },
-
-    ...{
-      productList: [],
-      productDetail: {}
     }
+
   };
   store.init();
   return store;

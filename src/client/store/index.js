@@ -12,26 +12,22 @@ const store = (function () {
                 url: `api/product/detail?id=${ id }`,
                 method: 'get'
             };
-        }
+        },
     };
 
     const store = {
         async request ( name, ...arg ) {
             const config = configs[ name ] instanceof Function ? configs[ name ]( ...arg ): configs[ name ];
             return await axios.request( config ).then( function ( response ) {
-                return Object.assign( store[ name ], response.data );
+                Object.assign( store, { name: response.data } );
+                return response.data;
             }.bind( this ));
         },
 
         init () {
             return Object.entries( configs ).map( function ([ name ]) {
-                return store[ name ] = {};
+                return store[ name ] = null;
             });
-        },
-
-        ... {
-            productList: [],
-            productDetail: {}
         }
     };
     

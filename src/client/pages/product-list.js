@@ -6,6 +6,8 @@ import store from "../store";
 export default function ProductList ( props ) {
     const [ productList, setProductList ] = useState( store.productList );
 
+    console.log( productList )
+
     useEffect( function componentDidMount () {
         store.request( 'productList' ).then( setProductList );
     }, []);
