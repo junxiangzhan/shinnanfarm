@@ -27,6 +27,11 @@ const store = (function () {
             return Object.entries( configs ).map( function ([ name ]) {
                 return store[ name ] = {};
             });
+        },
+
+        ... {
+            productList: [],
+            productDetail: {}
         }
     };
     

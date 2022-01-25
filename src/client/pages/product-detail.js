@@ -8,11 +8,10 @@ export default function GoodDetail () {
     const [ data, setData ] = useState( store.productDetail );
 
     useEffect( function componentDidUpdate() {
-        store.request( 'productDetail', '', id ).then( setData );
+        store.request( 'productDetail', id ).then( setData );
     }, [])
 
     return <div id="good_detail">
-        <div className="reserve"></div>
         { JSON.stringify( data ) }
     </div>;
 }

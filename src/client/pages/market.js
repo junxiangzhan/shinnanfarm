@@ -1,4 +1,6 @@
 import React from "react";
+import { Outlet } from "react-router-dom";
+import Searchbar from "../components/searchbar";
 
 import store from "../store";
 
@@ -23,12 +25,10 @@ export default class Market extends React.Component {
 
     render () {
         return <div id="market">
-            <div className="reserve"></div>
-            { JSON.stringify( this.state.data ) }
+            <div className="navbar-space container" style={{ maxWidth: 'var(--max-width-container-lg)' }}>
+                <Searchbar />
+                <Outlet />
+            </div>
         </div>
     }
-}
-
-Market.getInitialData = async function () {
-    return store.request( 'productList' );
 }
