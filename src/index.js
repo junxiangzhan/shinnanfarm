@@ -1,4 +1,5 @@
 import express from "express";
+import fileUpload from "express-fileupload";
 
 import apis from "./apis";
 import defaultRoute from "./default";
@@ -7,6 +8,8 @@ const app = express();
 
 app.disable( 'x-powered-by' );
 
+app.use( fileUpload())
+
 app.use( function ( req, res, next ) {
     res.set( 'x-content-type-options', 'nosniff' );
     next();
@@ -14,10 +17,10 @@ app.use( function ( req, res, next ) {
 
 app.use( express.static( 'public' ));
 
-app.get([ 
+app.all([ 
     '/api',
-    '/api/:method',
-    '/api/:method/:arg',
+    '/api/:api',
+    '/api/:api/:method',
     '/api/*'
 ], apis );
 

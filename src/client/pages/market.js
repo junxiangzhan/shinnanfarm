@@ -1,5 +1,6 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
+
 import Searchbar from "../components/searchbar";
 
 import store from "../store";

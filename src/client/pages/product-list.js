@@ -6,16 +6,18 @@ import store from "../store";
 export default function ProductList ( props ) {
     const [ productList, setProductList ] = useState( store.productList );
 
-    console.log( productList )
+    console.log( productList );
 
     useEffect( function componentDidMount () {
         store.request( 'productList' ).then( setProductList );
     }, []);
 
     return <div id="product-list">
-        { productList?.map && productList.map( function ( product, index ) {
-            return <Link key={ index } to={ `/market/${index}` }>{ product.name }</Link>
-        })}
+        <ul>
+            { productList?.map && productList.map( function ( product, index ) {
+                return <li key={ index }><Link to={ `/market/${index}` }>{ product.name }</Link></li>
+            })}
+        </ul>
     </div>
 }
 

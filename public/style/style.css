@@ -134,6 +134,10 @@
           transform: scaleX(-1);
 }
 
+pre {
+  font-family: 'Courier New', Courier, monospace;
+}
+
 @font-face {
   font-family: 'codicon';
   src: url("../fonts/codicon.ttf");
@@ -476,6 +480,43 @@ body {
   outline: none;
   font-size: 1rem;
   padding: 0 .5rem;
+}
+
+/* Breadcrumb */
+.breadcrumb {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: .5rem;
+  margin: 1rem 0;
+  padding: 1rem;
+  background: #3c02;
+}
+
+.breadcrumb a {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: .25rem;
+  color: #000;
+  text-decoration: none;
+  -webkit-transition: .25s;
+  transition: .25s;
+}
+
+.breadcrumb a:hover {
+  color: #2a0;
+}
+
+.breadcrumb .separator {
+  font-size: .5em;
+  opacity: .75;
 }
 
 /* Home page */

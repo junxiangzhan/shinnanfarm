@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+
+import Breadcrumb from "../components/breadcrumb";
 
 import store from "../store";
 
@@ -12,6 +14,10 @@ export default function GoodDetail () {
     }, [])
 
     return <div id="good_detail">
+        <Breadcrumb>
+            <Link to="/market">線上商店</Link>
+            { data.name }
+        </Breadcrumb>
         { JSON.stringify( data ) }
     </div>;
 }

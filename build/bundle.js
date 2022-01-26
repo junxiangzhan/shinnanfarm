@@ -10,13 +10,83 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./src/apis/files/index.js":
+/*!*********************************!*\
+  !*** ./src/apis/files/index.js ***!
+  \*********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ files)\n/* harmony export */ });\n/* harmony import */ var _list__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./list */ \"./src/apis/files/list.js\");\n/* harmony import */ var _uploadForm__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./uploadForm */ \"./src/apis/files/uploadForm.js\");\n/* harmony import */ var _upload__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./upload */ \"./src/apis/files/upload.js\");\n\n\n\nfunction files(req, res, conn) {\n  const {\n    params: {\n      method\n    }\n  } = req;\n\n  const [sqlString, values, callback] = ({\n    list: _list__WEBPACK_IMPORTED_MODULE_0__[\"default\"],\n    uploadform: _uploadForm__WEBPACK_IMPORTED_MODULE_1__[\"default\"],\n    upload: _upload__WEBPACK_IMPORTED_MODULE_2__[\"default\"]\n  }[method] ?? (() => []))(req, res);\n\n  if (!sqlString) return callback ? callback(conn) : res.send({\n    type: 'error',\n    message: `Unknown method: '${method}' had been request.`\n  });\n  conn.query(sqlString, values ?? [], callback ?? function defaultCallback(err, results, fields) {\n    if (err) throw err;\n    res.send(results);\n  });\n}\n;\n\n//# sourceURL=webpack://shinnan/./src/apis/files/index.js?");
+
+/***/ }),
+
+/***/ "./src/apis/files/list.js":
+/*!********************************!*\
+  !*** ./src/apis/files/list.js ***!
+  \********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ list)\n/* harmony export */ });\nfunction list() {\n  const queryString = 'SELECT *, \\'/api/files/get?name=\\' & `files`.`name` AS `url` FROM `files`;';\n  const values = null;\n  const callback = null;\n  return [queryString, values, callback];\n}\n\n//# sourceURL=webpack://shinnan/./src/apis/files/list.js?");
+
+/***/ }),
+
+/***/ "./src/apis/files/upload.js":
+/*!**********************************!*\
+  !*** ./src/apis/files/upload.js ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ upload)\n/* harmony export */ });\nfunction upload(req, res) {\n  const {\n    files: _files\n  } = req.files;\n  if (!_files) return [null, null, () => res.send({\n    type: 'error',\n    message: 'There aren\\'t any files need to be uploaded, request with files by naming \\'files\\'.'\n  })];\n  const files = [];\n\n  if (_files instanceof Array) {\n    files.push(..._files);\n  } else files.push(_files);\n\n  return [null, null, function (conn) {\n    Promise.all(files.map(function ({\n      name,\n      mimetype,\n      data\n    }) {\n      const buffer = [];\n\n      for (let i = 0; i < data.length / 63; i++) buffer.push(data);\n\n      return new Promise(function (resolve, reject) {\n        resolve(buffer);\n      });\n    })).then(res.send);\n  }];\n}\n\n//# sourceURL=webpack://shinnan/./src/apis/files/upload.js?");
+
+/***/ }),
+
+/***/ "./src/apis/files/uploadForm.js":
+/*!**************************************!*\
+  !*** ./src/apis/files/uploadForm.js ***!
+  \**************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ list)\n/* harmony export */ });\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"react\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var react_dom_server__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom/server */ \"react-dom/server\");\n/* harmony import */ var react_dom_server__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom_server__WEBPACK_IMPORTED_MODULE_1__);\n\n\nfunction list(req, res) {\n  return [null, null, () => res.send(react_dom_server__WEBPACK_IMPORTED_MODULE_1___default().renderToString( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(\"form\", {\n    method: \"post\",\n    encType: \"multipart/form-data\",\n    action: \"upload\"\n  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(\"input\", {\n    type: \"file\",\n    name: \"files\",\n    required: true,\n    multiple: true\n  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(\"br\", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(\"button\", null, \"\\u4E0A\\u50B3\\u6A94\\u6848\"))))];\n}\n\n//# sourceURL=webpack://shinnan/./src/apis/files/uploadForm.js?");
+
+/***/ }),
+
 /***/ "./src/apis/index.js":
 /*!***************************!*\
   !*** ./src/apis/index.js ***!
   \***************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nconst apis = function (req, res) {\n  const {\n    params: {\n      method\n    }\n  } = req;\n  this[method](req, res);\n};\n\napis.product = function (req, res) {\n  const productList = [{\n    name: '哈密瓜禮盒',\n    prise: 1299,\n    images: [],\n    isSoldOut: false\n  }, {\n    name: '小番茄 500g 盒裝',\n    prise: 599,\n    images: [],\n    isSoldOut: true\n  }];\n  const detailList = [{\n    name: '哈密瓜禮盒',\n    prise: 1299,\n    images: [],\n    intro: \"哈密瓜禮盒的介紹\",\n    stock: 5\n  }, {\n    name: '小番茄 500g 盒裝',\n    prise: 599,\n    images: [],\n    intro: \"小番茄 500g 盒裝的介紹\",\n    stock: 0\n  }];\n  const {\n    params,\n    query\n  } = req;\n\n  switch (params.arg) {\n    case 'all':\n      return res.send(JSON.stringify(productList));\n\n    case 'detail':\n      if (query.id == null) return res.send({\n        type: 'error',\n        code: '405',\n        message: `The id argument must be given, but get ${query.id}.`\n      });\n      return res.send(JSON.stringify(detailList[query.id] ?? {\n        type: 'error',\n        code: '404',\n        message: `Product Id: ${query.id}, has not found.`\n      }));\n\n    default:\n      return res.send(JSON.stringify({\n        type: 'error',\n        code: '405',\n        message: `The undefined method has been given.`\n      }));\n  }\n}.bind(apis);\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (apis.bind(apis));\n\n//# sourceURL=webpack://shinnan/./src/apis/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var mysql__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! mysql */ \"mysql\");\n/* harmony import */ var mysql__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(mysql__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _files__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./files */ \"./src/apis/files/index.js\");\n/* harmony import */ var _products__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./products */ \"./src/apis/products/index.js\");\n\n\n\nconst DBhost = process.env.DBHOST ?? 'localhost';\nconst DBaccount = process.env.DBACCOUNT ?? 'root';\nconst DBpassword = process.env.DBPASSWORD ?? '';\nconst DBname = process.env.DBNAME ?? 'shinnanfarm';\nconst connection = mysql__WEBPACK_IMPORTED_MODULE_0___default().createConnection({\n  host: DBhost,\n  user: DBaccount,\n  password: DBpassword,\n  database: DBname\n});\n\nfunction apis(req, res) {\n  const {\n    params: {\n      api\n    }\n  } = req;\n  return (this[api] ?? function (req, res) {\n    res.send({\n      type: 'error',\n      message: `Unknown api: '${api}' had been request.`\n    });\n  })(req, res, connection);\n}\n\napis.files = _files__WEBPACK_IMPORTED_MODULE_1__[\"default\"].bind(apis);\napis.products = _products__WEBPACK_IMPORTED_MODULE_2__[\"default\"].bind(apis);\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (apis.bind(apis));\n\n//# sourceURL=webpack://shinnan/./src/apis/index.js?");
+
+/***/ }),
+
+/***/ "./src/apis/products/all.js":
+/*!**********************************!*\
+  !*** ./src/apis/products/all.js ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ all)\n/* harmony export */ });\nfunction all() {\n  const queryString = 'SELECT * FROM `products`;';\n  const values = null;\n  const callback = null;\n  return [queryString, values, callback];\n}\n\n//# sourceURL=webpack://shinnan/./src/apis/products/all.js?");
+
+/***/ }),
+
+/***/ "./src/apis/products/details.js":
+/*!**************************************!*\
+  !*** ./src/apis/products/details.js ***!
+  \**************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ all)\n/* harmony export */ });\nfunction all({\n  query: {\n    name\n  }\n}, res) {\n  if (!name) return [null, null, () => res.send({\n    type: 'error',\n    message: 'When using method \\'details\\', parameter \\'name\\' must be given.'\n  })];\n  const queryString = 'SELECT * FROM `products` WHERE `products`.`name` = ?;';\n  const values = [name];\n\n  const callback = function callback(err, results, fields) {\n    if (err) throw err;\n    res.send(results);\n  };\n\n  return [queryString, values, callback];\n}\n\n//# sourceURL=webpack://shinnan/./src/apis/products/details.js?");
+
+/***/ }),
+
+/***/ "./src/apis/products/index.js":
+/*!************************************!*\
+  !*** ./src/apis/products/index.js ***!
+  \************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ product)\n/* harmony export */ });\n/* harmony import */ var _all__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./all */ \"./src/apis/products/all.js\");\n/* harmony import */ var _details__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./details */ \"./src/apis/products/details.js\");\n\n\nfunction product(req, res, conn) {\n  const {\n    params: {\n      method\n    },\n    query\n  } = req;\n  res.set('content-type', 'application/json; charset=utf-8');\n\n  const [sqlString, values, callback] = ({\n    all: _all__WEBPACK_IMPORTED_MODULE_0__[\"default\"],\n    details: _details__WEBPACK_IMPORTED_MODULE_1__[\"default\"]\n  }[method] ?? (() => []))(query, res);\n\n  if (!sqlString) return res.send({\n    type: 'error',\n    message: `Unknown method: '${method}' had been request.`\n  });\n  conn.query(sqlString, values ?? [], callback ?? function defaultCallback(err, results, fields) {\n    if (err) throw err;\n    res.send(results);\n  });\n}\n;\n\n//# sourceURL=webpack://shinnan/./src/apis/products/index.js?");
 
 /***/ }),
 
@@ -27,6 +97,16 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ App)\n/* harmony export */ });\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"react\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ \"react-router-dom\");\n/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_router_dom__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _components_navbar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/navbar */ \"./src/client/components/navbar.js\");\n/* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./routes */ \"./src/client/routes/index.js\");\n\n\n\n\nfunction App() {\n  const location = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_1__.useLocation)();\n  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_navbar__WEBPACK_IMPORTED_MODULE_2__[\"default\"], null), (0,react_router_dom__WEBPACK_IMPORTED_MODULE_1__.useRoutes)(_routes__WEBPACK_IMPORTED_MODULE_3__[\"default\"], location.pathname));\n}\n\n//# sourceURL=webpack://shinnan/./src/client/app.js?");
+
+/***/ }),
+
+/***/ "./src/client/components/breadcrumb.js":
+/*!*********************************************!*\
+  !*** ./src/client/components/breadcrumb.js ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ Breadcrumb)\n/* harmony export */ });\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"react\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);\n\nfunction Breadcrumb(props) {\n  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(\"div\", {\n    className: \"breadcrumb\"\n  }, props.children?.map ? props.children.map(function (child, index, children) {\n    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), {\n      key: index\n    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(\"div\", null, child), index != children.length - 1 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(\"div\", {\n      className: \"separator\"\n    }, props.separator ?? '/'));\n  }) : props.children);\n}\n\n//# sourceURL=webpack://shinnan/./src/client/components/breadcrumb.js?");
 
 /***/ }),
 
@@ -86,7 +166,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
   \********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ GoodDetail)\n/* harmony export */ });\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"react\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ \"react-router-dom\");\n/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_router_dom__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../store */ \"./src/client/store/index.js\");\n\n\n\nfunction GoodDetail() {\n  const {\n    id\n  } = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_1__.useParams)();\n  const [data, setData] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(_store__WEBPACK_IMPORTED_MODULE_2__[\"default\"].productDetail);\n  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function componentDidUpdate() {\n    _store__WEBPACK_IMPORTED_MODULE_2__[\"default\"].request('productDetail', id).then(setData);\n  }, []);\n  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(\"div\", {\n    id: \"good_detail\"\n  }, JSON.stringify(data));\n}\n\nGoodDetail.getInitialData = async function ({\n  id\n}) {\n  return _store__WEBPACK_IMPORTED_MODULE_2__[\"default\"].request('productDetail', id);\n};\n\n//# sourceURL=webpack://shinnan/./src/client/pages/product-detail.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ GoodDetail)\n/* harmony export */ });\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"react\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ \"react-router-dom\");\n/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_router_dom__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _components_breadcrumb__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/breadcrumb */ \"./src/client/components/breadcrumb.js\");\n/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../store */ \"./src/client/store/index.js\");\n\n\n\n\nfunction GoodDetail() {\n  const {\n    id\n  } = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_1__.useParams)();\n  const [data, setData] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(_store__WEBPACK_IMPORTED_MODULE_3__[\"default\"].productDetail);\n  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function componentDidUpdate() {\n    _store__WEBPACK_IMPORTED_MODULE_3__[\"default\"].request('productDetail', id).then(setData);\n  }, []);\n  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(\"div\", {\n    id: \"good_detail\"\n  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_breadcrumb__WEBPACK_IMPORTED_MODULE_2__[\"default\"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link, {\n    to: \"/market\"\n  }, \"\\u7DDA\\u4E0A\\u5546\\u5E97\"), data.name), JSON.stringify(data));\n}\n\nGoodDetail.getInitialData = async function ({\n  id\n}) {\n  return _store__WEBPACK_IMPORTED_MODULE_3__[\"default\"].request('productDetail', id);\n};\n\n//# sourceURL=webpack://shinnan/./src/client/pages/product-detail.js?");
 
 /***/ }),
 
@@ -96,7 +176,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
   \******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ ProductList)\n/* harmony export */ });\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"react\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ \"react-router-dom\");\n/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_router_dom__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../store */ \"./src/client/store/index.js\");\n\n\n\nfunction ProductList(props) {\n  const [productList, setProductList] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(_store__WEBPACK_IMPORTED_MODULE_2__[\"default\"].productList);\n  console.log(productList);\n  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function componentDidMount() {\n    _store__WEBPACK_IMPORTED_MODULE_2__[\"default\"].request('productList').then(setProductList);\n  }, []);\n  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(\"div\", {\n    id: \"product-list\"\n  }, productList?.map && productList.map(function (product, index) {\n    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link, {\n      key: index,\n      to: `/market/${index}`\n    }, product.name);\n  }));\n}\n\nProductList.getInitialData = async function () {\n  return _store__WEBPACK_IMPORTED_MODULE_2__[\"default\"].request('productList');\n};\n\n//# sourceURL=webpack://shinnan/./src/client/pages/product-list.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ ProductList)\n/* harmony export */ });\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"react\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ \"react-router-dom\");\n/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_router_dom__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../store */ \"./src/client/store/index.js\");\n\n\n\nfunction ProductList(props) {\n  const [productList, setProductList] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(_store__WEBPACK_IMPORTED_MODULE_2__[\"default\"].productList);\n  console.log(productList);\n  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function componentDidMount() {\n    _store__WEBPACK_IMPORTED_MODULE_2__[\"default\"].request('productList').then(setProductList);\n  }, []);\n  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(\"div\", {\n    id: \"product-list\"\n  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(\"ul\", null, productList?.map && productList.map(function (product, index) {\n    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(\"li\", {\n      key: index\n    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link, {\n      to: `/market/${index}`\n    }, product.name));\n  })));\n}\n\nProductList.getInitialData = async function () {\n  return _store__WEBPACK_IMPORTED_MODULE_2__[\"default\"].request('productList');\n};\n\n//# sourceURL=webpack://shinnan/./src/client/pages/product-list.js?");
 
 /***/ }),
 
@@ -116,7 +196,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
   \***********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ \"axios\");\n/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);\n\n\nconst store = function () {\n  const configs = {\n    productList: {\n      url: 'api/product/all',\n      method: 'get'\n    },\n\n    productDetail(id) {\n      return {\n        url: `api/product/detail?id=${id}`,\n        method: 'get'\n      };\n    }\n\n  };\n  const store = {\n    async request(name, ...arg) {\n      const config = configs[name] instanceof Function ? configs[name](...arg) : configs[name];\n      return await axios__WEBPACK_IMPORTED_MODULE_0___default().request(config).then(function (response) {\n        Object.assign(store, {\n          name: response.data\n        });\n        return response.data;\n      }.bind(this));\n    },\n\n    init() {\n      return Object.entries(configs).map(function ([name]) {\n        return store[name] = null;\n      });\n    }\n\n  };\n  store.init();\n  return store;\n}();\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (store);\n\n//# sourceURL=webpack://shinnan/./src/client/store/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ \"axios\");\n/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);\n\n\nconst store = function () {\n  const configs = {\n    productList: {\n      url: 'api/product/all',\n      method: 'get'\n    },\n\n    productDetail(id) {\n      return {\n        url: `api/product/detail?id=${id}`,\n        method: 'get'\n      };\n    }\n\n  };\n  const store = {\n    async request(name, ...arg) {\n      const config = configs[name] instanceof Function ? configs[name](...arg) : configs[name];\n      return await axios__WEBPACK_IMPORTED_MODULE_0___default().request(config).then(function (response) {\n        Object.assign(store, {\n          [name]: response.data\n        });\n        return response.data;\n      }.bind(this));\n    },\n\n    init() {\n      return Object.entries(configs).map(function ([name]) {\n        return store[name] = null;\n      });\n    }\n\n  };\n  store.init();\n  return store;\n}();\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (store);\n\n//# sourceURL=webpack://shinnan/./src/client/store/index.js?");
 
 /***/ }),
 
@@ -136,7 +216,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
   \**********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! express */ \"express\");\n/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(express__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _apis__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./apis */ \"./src/apis/index.js\");\n/* harmony import */ var _default__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./default */ \"./src/default.js\");\n\n\n\nconst app = express__WEBPACK_IMPORTED_MODULE_0___default()();\napp.disable('x-powered-by');\napp.use(function (req, res, next) {\n  res.set('x-content-type-options', 'nosniff');\n  next();\n});\napp.use(express__WEBPACK_IMPORTED_MODULE_0___default()[\"static\"]('public'));\napp.get(['/api', '/api/:method', '/api/:method/:arg', '/api/*'], _apis__WEBPACK_IMPORTED_MODULE_1__[\"default\"]);\napp.get('*', _default__WEBPACK_IMPORTED_MODULE_2__[\"default\"]);\nconst port = process.env.PORT ?? 5000;\napp.listen(port, function () {\n  console.log(`Your app is listening on port ${process.env.port ?? port}.`);\n});\n\n//# sourceURL=webpack://shinnan/./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! express */ \"express\");\n/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(express__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var express_fileupload__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! express-fileupload */ \"express-fileupload\");\n/* harmony import */ var express_fileupload__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(express_fileupload__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _apis__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./apis */ \"./src/apis/index.js\");\n/* harmony import */ var _default__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./default */ \"./src/default.js\");\n\n\n\n\nconst app = express__WEBPACK_IMPORTED_MODULE_0___default()();\napp.disable('x-powered-by');\napp.use(express_fileupload__WEBPACK_IMPORTED_MODULE_1___default()());\napp.use(function (req, res, next) {\n  res.set('x-content-type-options', 'nosniff');\n  next();\n});\napp.use(express__WEBPACK_IMPORTED_MODULE_0___default()[\"static\"]('public'));\napp.all(['/api', '/api/:api', '/api/:api/:method', '/api/*'], _apis__WEBPACK_IMPORTED_MODULE_2__[\"default\"]);\napp.get('*', _default__WEBPACK_IMPORTED_MODULE_3__[\"default\"]);\nconst port = process.env.PORT ?? 5000;\napp.listen(port, function () {\n  console.log(`Your app is listening on port ${process.env.port ?? port}.`);\n});\n\n//# sourceURL=webpack://shinnan/./src/index.js?");
 
 /***/ }),
 
@@ -157,6 +237,26 @@ module.exports = require("axios");
 /***/ ((module) => {
 
 module.exports = require("express");
+
+/***/ }),
+
+/***/ "express-fileupload":
+/*!*************************************!*\
+  !*** external "express-fileupload" ***!
+  \*************************************/
+/***/ ((module) => {
+
+module.exports = require("express-fileupload");
+
+/***/ }),
+
+/***/ "mysql":
+/*!************************!*\
+  !*** external "mysql" ***!
+  \************************/
+/***/ ((module) => {
+
+module.exports = require("mysql");
 
 /***/ }),
 
