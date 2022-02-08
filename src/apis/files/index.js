@@ -1,21 +1,27 @@
 import list from './list';
-import uploadform from './uploadForm';
+import get from './get';
 import upload from './upload';
+import update from './update';
+import _delete from './delete';
 
 export default function files ( req, res, conn ) {
-    const { params: { method }} = req;
 
-    const [ sqlString, values, callback ] = ({
-        list, uploadform, upload
-    }[ method ] ?? (() => []))( req, res );
+    res.set( 'content-type', 'application/json');
     
-    if ( !sqlString ) return callback ? callback( conn ): res.send({
-        type: 'error',
-        message: `Unknown method: '${ method }' had been request.`
-    });
-    
-    conn.query( sqlString, values ?? [], callback ?? function defaultCallback ( err, results, fields ) {
-        if ( err ) throw err;
-        res.send( results );
-    });
+    const { method: requestMethod, params: { name: fileName }} = req;
+
+    const methods = {
+        GET: get,
+        POST: upload,
+        PUT: update,
+        DELETE: _delete
+    };
+
+    if ( !fileName ) return list( req, res, conn );
+    return ( methods[ requestMethod ] ?? function ( req, res ) {
+        res.send( {
+            type: 'error',
+            message: `Undefined request method: '${ requestMethod }' was used.`
+        });
+    })( req, res, conn );
 };

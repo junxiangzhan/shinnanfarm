@@ -2,6 +2,7 @@ import mysql from "mysql";
 
 import files from "./files";
 import products from "./products";
+import users from "./users";
 
 const DBhost = process.env.DBHOST ?? 'localhost';
 const DBaccount = process.env.DBACCOUNT ?? 'root';
@@ -27,5 +28,6 @@ function apis ( req, res ) {
 
 apis.files = files.bind( apis );
 apis.products = products.bind( apis );
+apis.users = users.bind( apis );
 
 export default apis.bind( apis );
