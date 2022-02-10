@@ -2,20 +2,19 @@ import all from './all';
 import details from './details';
 
 export default function product ( req, res, conn ) {
-    const { params: { method }, query } = req;
-    res.set( 'content-type', 'application/json; charset=utf-8' );
+    res.set( 'content-type', 'application/json');
+    
+    const { method: requestMethod, params: { name: fileName }} = req;
 
-    const [ sqlString, values, callback ] = ({
-        all, details
-    }[ method ] ?? (() => []))( query, res );
-    
-    if ( !sqlString ) return res.send({
-        type: 'error',
-        message: `Unknown method: '${ method }' had been request.`
-    });
-    
-    conn.query( sqlString, values ?? [], callback ?? function defaultCallback ( err, results, fields ) {
-        if ( err ) throw err;
-        res.send( results );
-    });
+    const methods = {
+        GET: details,
+    }
+
+    if ( !fileName ) return all( req, res, conn );
+    return ( methods[ requestMethod ] ?? function ( req, res ) {
+        res.send( {
+            type: 'error',
+            message: `Undefined request method: '${ requestMethod }' was used.`
+        });
+    })( req, res, conn );
 };

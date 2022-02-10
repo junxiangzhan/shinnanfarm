@@ -3,13 +3,13 @@ import axios from "axios";
 const store = (function () {
     const configs = {
         productList: {
-            url: 'api/product/all',
+            url: 'api/products/',
             method: 'get'
         },
 
-        productDetail ( id ) {
+        productDetail ( name ) {
             return {
-                url: `api/product/detail?id=${ id }`,
+                url: encodeURI( `api/products/${ name }` ),
                 method: 'get'
             };
         },

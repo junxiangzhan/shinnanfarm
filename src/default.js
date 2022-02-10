@@ -2,17 +2,19 @@ import axios from 'axios';
 import fs from "fs";
 import path from "path";
 
-import React from "react";
+import React, { createContext } from "react";
 import ReactDOMServer from "react-dom/server";
-import { matchRoutes, useRoutes } from 'react-router-dom';
+import { matchRoutes } from 'react-router-dom';
 import { StaticRouter } from "react-router-dom/server";
 
 import App from "./client/app";
 import routes from "./client/routes";
+import cookieHandler from "./client/cookie/server";
 
 axios.defaults.baseURL = process.env.HOST ?? 'http://localhost:5000';
 
 export default function ( req, res ) {
+
     return fs.readFile( path.resolve( __dirname, 'index.html' ), function ( err, data ) {
         if ( err ) throw err;
 
@@ -27,7 +29,7 @@ export default function ( req, res ) {
                 content: ReactDOMServer.renderToString(
                     <div>
                         <StaticRouter location={ req.path }>
-                            <App />
+                            <App cookies={ cookieHandler( req.cookies )} />
                         </StaticRouter>
                     </div>
                 )

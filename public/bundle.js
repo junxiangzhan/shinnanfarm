@@ -2566,16 +2566,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* binding */ App)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/index.js");
 /* harmony import */ var _components_navbar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/navbar */ "./src/client/components/navbar.js");
-/* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./routes */ "./src/client/routes/index.js");
+/* harmony import */ var _cookie__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./cookie */ "./src/client/cookie/index.js");
+/* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./routes */ "./src/client/routes/index.js");
 
 
 
 
-function App() {
-  const location = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_3__.useLocation)();
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_navbar__WEBPACK_IMPORTED_MODULE_1__["default"], null), (0,react_router_dom__WEBPACK_IMPORTED_MODULE_3__.useRoutes)(_routes__WEBPACK_IMPORTED_MODULE_2__["default"], location.pathname));
+
+function App(props) {
+  const location = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_4__.useLocation)();
+  const cookie = props.cookies;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_cookie__WEBPACK_IMPORTED_MODULE_2__["default"].Provider, {
+    value: cookie
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_navbar__WEBPACK_IMPORTED_MODULE_1__["default"], null), (0,react_router_dom__WEBPACK_IMPORTED_MODULE_4__.useRoutes)(_routes__WEBPACK_IMPORTED_MODULE_3__["default"], location.pathname));
 }
 
 /***/ }),
@@ -2662,16 +2667,13 @@ function Carousel({
 class _Carousel extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
   constructor(props) {
     super(props);
-    const items = this.props.children.filter(element => element);
+    const items = this.props.children;
     this.state = {
       items,
       current: 0,
       isAnimating: false,
       timeout: this.props.interval ?? 5000
     };
-    this.componentDidMount = this.componentDidMount.bind(this);
-    this.componentWillUnmount = this.componentWillUnmount.bind(this);
-    this.componentDidUpdate = this.componentDidUpdate.bind(this);
     this.nextTurn = this.nextTurn.bind(this);
     this.renderItems = this.renderItems.bind(this);
   }
@@ -2745,13 +2747,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* binding */ Navbar)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
+/* harmony import */ var _cookie__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../cookie */ "./src/client/cookie/index.js");
+
 
 
 function Navbar() {
   const [isCollapse, setCollapse] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true);
   const [isLogin] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const [navbarCollapse, setNavbarCollapse] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
+  const cookie = (0,_cookie__WEBPACK_IMPORTED_MODULE_1__.useCookie)();
   const togglerProps = {
     className: ['navbar-toggler', !isCollapse && 'active'].filter(Boolean).join(" "),
     role: 'button',
@@ -2770,12 +2775,21 @@ function Navbar() {
     setCollapse(!isCollapse);
   }
 
+  const [user, setUser] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(cookie.getUser());
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    const listener = cookie.addListener('user', function () {
+      setUser(cookie.getUser());
+    });
+    return function () {
+      cookie.removeListener('user', listener);
+    };
+  }, []);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("nav", {
     id: "navbar",
     role: "navigation"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "navbar-container"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
     to: "/",
     className: "navbar-brand"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
@@ -2789,29 +2803,29 @@ function Navbar() {
     className: "navbar-nav"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "nav-item"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
     to: "/",
     className: "nav-link"
   }, "\u9996\u9801")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "nav-item"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
     to: "/news",
     className: "nav-link"
   }, "\u6700\u65B0\u6D88\u606F")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "nav-item"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
     to: "/market",
     className: "nav-link"
   }, "\u7DDA\u4E0A\u5546\u5E97")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "nav-item"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
     to: "/account",
     className: "nav-link nav-option"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
     className: "icon"
-  }, '\uE77B'), " ", isLogin ? '會員中心' : '登入 / 註冊')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  }, '\uE77B'), " ", user ? '會員中心' : '登入 / 註冊')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "nav-item"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
     to: "/cart",
     className: "nav-link nav-option"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
@@ -2854,6 +2868,385 @@ function Searchbar(props) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
     className: "icon icon-alt icon-bold"
   }, '\uE721')));
+}
+
+/***/ }),
+
+/***/ "./src/client/cookie/index.js":
+/*!************************************!*\
+  !*** ./src/client/cookie/index.js ***!
+  \************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
+/* harmony export */   "cookieHandler": () => (/* binding */ cookieHandler),
+/* harmony export */   "useCookie": () => (/* binding */ useCookie)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+const Cookie = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.createContext)();
+
+function cookieHandler(cookie) {
+  const listeners = {};
+
+  function triggerEvent(...events) {
+    for (let event of events) {
+      const eventListeners = listeners[event];
+      let tmp = true;
+
+      for (let {
+        listener,
+        once
+      } of eventListeners) {
+        if (once) tmp = false;
+        listener();
+      }
+
+      ;
+      if (tmp) return;
+
+      for (let index = 0; index < eventListeners.length; index++) if (eventListeners[index].once) {
+        eventListeners.splice(index, 1);
+        index--;
+      }
+    }
+  }
+
+  return {
+    userLogin(userName, password) {
+      const reqBody = new FormData();
+      reqBody.append("userName", userName);
+      reqBody.append("password", password);
+      return new Promise(function (resolve, reject) {
+        fetch("/api/users/login", {
+          method: "post",
+          body: reqBody
+        }).then(function (res) {
+          return res.json().then(function (token) {
+            if (token) {
+              cookie.save('userToken', token, {
+                path: '/'
+              });
+              return resolve(token);
+            }
+
+            ;
+            reject();
+          });
+        });
+      }).then(function (token) {
+        triggerEvent('user');
+        return token;
+      });
+    },
+
+    userLogout() {
+      cookie.remove("userToken", {
+        path: "/"
+      });
+      triggerEvent('user');
+    },
+
+    userRegister(userName, password) {
+      const reqBody = new FormData();
+      reqBody.append("userName", userName);
+      reqBody.append("password", password);
+      return new Promise(function (resolve, reject) {
+        fetch("/api/users/register", {
+          method: "post",
+          body: reqBody
+        }).then(function (res) {
+          return res.json().then(function (result) {
+            if (result.token) {
+              cookie.save('userToken', result.token, {
+                path: '/'
+              });
+              return resolve(result.token);
+            }
+
+            ;
+            reject();
+          });
+        });
+      }).then(function (token) {
+        triggerEvent('user');
+        return token;
+      });
+    },
+
+    cartSet(productId, count) {
+      const cart = cookie.load("cart");
+      if (!cart) return cookie.save("cart", {
+        [productId]: count
+      }, {
+        path: "/"
+      });
+      if (count) return cart[productId] = count;
+      delete cart[productId];
+    },
+
+    cartClear() {
+      cookie.remove("cart", {
+        path: "/"
+      });
+    },
+
+    getUser() {
+      return cookie.load("userToken");
+    },
+
+    checkUser() {
+      return new Promise(function (resolve, reject) {
+        const reqBody = new FormData();
+        reqBody.append("token", cookie.load("userToken"));
+        fetch("/api/users/token", {
+          method: "post",
+          body: reqBody
+        }).then(function (res) {
+          return res.json().then(function (result) {
+            return result ? resolve() : reject();
+          });
+        });
+      });
+    },
+
+    getCart() {
+      return cookie.load("cart");
+    },
+
+    addListener(event, listenerFunction, option) {
+      if (!listeners[event]) listeners[event] = [];
+      const listener = Object.assign({
+        listener: listenerFunction,
+        once: false
+      }, option);
+      listeners[event].push(listener);
+      return listener;
+    },
+
+    removeListener(event, listener) {
+      const eventListeners = listeners[event];
+
+      for (let index = 0; index < eventListeners.length; index++) if (eventListeners[index] == listener) {
+        eventListeners.splice(index, 1);
+        index--;
+      }
+    }
+
+  };
+}
+
+function useCookie() {
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.useContext)(Cookie);
+}
+
+Cookie.cookieHandler = cookieHandler;
+Cookie.useCookie = useCookie;
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Cookie);
+
+
+/***/ }),
+
+/***/ "./src/client/pages/account.js":
+/*!*************************************!*\
+  !*** ./src/client/pages/account.js ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Account)
+/* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _cookie__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../cookie */ "./src/client/cookie/index.js");
+
+
+
+function Account() {
+  const cookie = (0,_cookie__WEBPACK_IMPORTED_MODULE_2__.useCookie)();
+  const [user, setUser] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(cookie.getUser());
+  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
+    cookie.checkUser().catch(function () {
+      cookie.userLogout();
+      setUser(null);
+    });
+  }, []);
+
+  function login(userName, password) {
+    return cookie.userLogin(userName, password).then(function (token) {
+      setUser(token);
+      return token;
+    });
+  }
+
+  function logout() {
+    cookie.userLogout();
+    setUser(null);
+  }
+
+  function register(userName, password) {
+    return cookie.userRegister(userName, password).then(function (token) {
+      setUser(token);
+      return token;
+    });
+  }
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
+    id: "account"
+  }, user ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(AccountDetail, {
+    logout: logout,
+    user: user
+  }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(Forms, {
+    login: login,
+    register: register
+  }));
+}
+
+function Forms({
+  login,
+  register
+}) {
+  const [form, setForm] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(true);
+
+  function setLogin() {
+    setForm(true);
+  }
+
+  function setRegister() {
+    setForm(false);
+  }
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
+    id: "form",
+    className: "navbar-space"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
+    className: "form"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("h2", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("span", {
+    onClick: setLogin,
+    "data-current": form
+  }, "\u6703\u54E1\u767B\u5165"), " / ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("span", {
+    onClick: setRegister,
+    "data-current": !form
+  }, "\u8A3B\u518A\u65B0\u6703\u54E1")), form ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(LoginForm, {
+    login: login
+  }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(RegisterForm, {
+    register: register
+  })));
+}
+
+function LoginForm({
+  login
+}) {
+  const [isLoading, setLoadingState] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+  const [userNameElement, setUserNameElement] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
+  const [passwordElement, setPasswordElement] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
+  const [inputError, setInputError] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+
+  function onSubmitHandle(event) {
+    event.preventDefault();
+    setLoadingState(true);
+    login(userNameElement.value, passwordElement.value).catch(function () {
+      setLoadingState(false);
+      setInputError(true);
+    });
+  }
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("form", {
+    onSubmit: onSubmitHandle
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("label", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("span", null, "\u7528\u6236\u540D\u7A31"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("input", {
+    name: "username",
+    type: "text",
+    placeholder: "",
+    ref: setUserNameElement,
+    autoComplete: "off",
+    required: true
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("label", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("span", null, "\u7528\u6236\u5BC6\u78BC"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("input", {
+    type: "password",
+    ref: setPasswordElement,
+    autoComplete: "off",
+    required: true
+  })), inputError && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("span", {
+    className: "error-message"
+  }, "\u5E33\u865F\u6216\u5BC6\u78BC\u932F\u8AA4"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("button", {
+    type: "submit",
+    "aria-label": "\u767B\u5165\u6309\u9215",
+    disabled: isLoading
+  }, isLoading ? '載入中' : '登入'));
+}
+
+function RegisterForm(props) {
+  const {
+    register
+  } = props;
+  const [isLoading, setLoadingState] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+  const [userNameElement, setUserNameElement] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
+  const [passwordElement, setPasswordElement] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
+  const [passwordConfirm, setPasswordConfirm] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
+  const [inputError, setInputError] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+
+  function onSubmitHandle(event) {
+    event.preventDefault();
+    let error = 0;
+
+    if (passwordConfirm.value !== passwordElement.value) {
+      error += 2;
+    }
+
+    ;
+
+    if (passwordElement.value.length < 8) {
+      error += 4;
+    }
+
+    ;
+    if (error) return setInputError(error);
+    register(userNameElement.value, passwordElement.value).catch(function () {
+      setInputError(1);
+      setLoadingState(false);
+    });
+  }
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("form", {
+    onSubmit: onSubmitHandle
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("label", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("span", null, "\u7528\u6236\u540D\u7A31"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("input", {
+    type: "text",
+    ref: setUserNameElement,
+    name: "username",
+    autoComplete: "off",
+    required: true
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("label", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("span", null, "\u7528\u6236\u5BC6\u78BC"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("input", {
+    type: "password",
+    ref: setPasswordElement,
+    autoComplete: "off",
+    placeholder: "\u6700\u5C11\u61C9\u6709 8 \u500B\u5B57\u5143",
+    required: true
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("label", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("input", {
+    type: "password",
+    ref: setPasswordConfirm,
+    autoComplete: "off",
+    placeholder: "\u8ACB\u518D\u6B21\u8F38\u5165\u5BC6\u78BC",
+    required: true
+  })), Boolean(inputError & 1) && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("span", {
+    className: "error-message"
+  }, "\u4F7F\u7528\u8005\u5E33\u865F\u5DF2\u88AB\u4F7F\u7528"), Boolean(inputError & 2) && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("span", {
+    className: "error-message"
+  }, "\u8F38\u5165\u5BC6\u78BC\u4E26\u4E0D\u76F8\u540C"), Boolean(inputError & 4) && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("span", {
+    className: "error-message"
+  }, "\u5BC6\u78BC\u6700\u5C11\u61C9\u6709 8 \u500B\u5B57\u5143"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("button", {
+    type: "submit",
+    "aria-label": "\u8A3B\u518A\u6309\u9215",
+    disabled: isLoading
+  }, isLoading ? '載入中' : '註冊'));
+}
+
+function AccountDetail(props) {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", null, props.user);
 }
 
 /***/ }),
@@ -2974,7 +3367,7 @@ class Market extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       className: "navbar-space container",
       style: {
-        maxWidth: 'var(--max-width-container-lg)'
+        maxWidth: 'var(--max-width-container-xl)'
       }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_searchbar__WEBPACK_IMPORTED_MODULE_1__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Outlet, null)));
   }
@@ -2992,36 +3385,66 @@ class Market extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ GoodDetail)
+/* harmony export */   "default": () => (/* binding */ GoodDetailPage)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
 /* harmony import */ var _components_breadcrumb__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/breadcrumb */ "./src/client/components/breadcrumb.js");
-/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../store */ "./src/client/store/index.js");
+/* harmony import */ var _components_carousel__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/carousel */ "./src/client/components/carousel.js");
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../store */ "./src/client/store/index.js");
 
 
 
 
-function GoodDetail() {
+
+function GoodDetailPage() {
   const {
-    id
-  } = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_3__.useParams)();
-  const [data, setData] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(_store__WEBPACK_IMPORTED_MODULE_2__["default"].productDetail);
+    name
+  } = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_4__.useParams)();
+  const [data, setData] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(_store__WEBPACK_IMPORTED_MODULE_3__["default"].productDetail);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function componentDidUpdate() {
-    _store__WEBPACK_IMPORTED_MODULE_2__["default"].request('productDetail', id).then(setData);
+    if (data?.name != name) _store__WEBPACK_IMPORTED_MODULE_3__["default"].request('productDetail', name).then(setData);
   }, []);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-    id: "good_detail"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_breadcrumb__WEBPACK_IMPORTED_MODULE_1__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
+    id: "good-detail"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_breadcrumb__WEBPACK_IMPORTED_MODULE_1__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Link, {
     to: "/market"
-  }, "\u7DDA\u4E0A\u5546\u5E97"), data.name), JSON.stringify(data));
+  }, "\u7DDA\u4E0A\u5546\u5E97"), name), data?.name == name ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(GoodDetail, {
+    data: data
+  }) : "LOADING", JSON.stringify(data));
 }
 
-GoodDetail.getInitialData = async function ({
-  id
+function GoodDetail({
+  data
 }) {
-  return _store__WEBPACK_IMPORTED_MODULE_2__["default"].request('productDetail', id);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "good-detail-row"
+  }, data?.images?.map ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_carousel__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    className: "good-detail-images"
+  }, data.images.map(function (name) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
+      src: `/api/files/${name}`,
+      alt: name,
+      key: name
+    });
+  })) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
+    className: "good-detail-images",
+    src: "/api/files/default_product.svg",
+    alt: data.name
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "good-detail-info"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", {
+    className: "good-name"
+  }, data.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "good-price"
+  }, "NT$ ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, data.price))));
+}
+
+GoodDetailPage.getInitialData = async function ({
+  name
+}) {
+  return _store__WEBPACK_IMPORTED_MODULE_3__["default"].request('productDetail', name);
 };
 
 /***/ }),
@@ -3038,31 +3461,58 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* binding */ ProductList)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
-/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../store */ "./src/client/store/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
+/* harmony import */ var _components_carousel__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/carousel */ "./src/client/components/carousel.js");
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../store */ "./src/client/store/index.js");
+
 
 
 
 function ProductList(props) {
-  const [productList, setProductList] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(_store__WEBPACK_IMPORTED_MODULE_1__["default"].productList);
-  console.log(productList);
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function componentDidMount() {
-    _store__WEBPACK_IMPORTED_MODULE_1__["default"].request('productList').then(setProductList);
-  }, []);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     id: "product-list"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("ul", null, productList?.map && productList.map(function (product, index) {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", {
-      key: index
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
-      to: `/market/${index}`
-    }, product.name));
-  })));
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "product-list-container"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ProductListComponent, null)));
 }
 
 ProductList.getInitialData = async function () {
-  return _store__WEBPACK_IMPORTED_MODULE_1__["default"].request('productList');
+  return _store__WEBPACK_IMPORTED_MODULE_2__["default"].request('productList');
 };
+
+function ProductListComponent(props) {
+  const {
+    page = 0,
+    prePage = 20
+  } = props;
+  const [productList, setProductList] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(_store__WEBPACK_IMPORTED_MODULE_2__["default"].productList);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function componentDidMount() {
+    _store__WEBPACK_IMPORTED_MODULE_2__["default"].request('productList').then(setProductList);
+  }, []);
+  return productList?.slice ? productList.slice(page * prePage, (page + 1) * prePage).map(function (product, index) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
+      className: "product-card",
+      key: product.name,
+      to: product.name
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
+      className: "product-image",
+      src: `/api/files/${product?.images?.[0] ?? "default_product.svg"}`,
+      alt: product.name
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "product-name"
+    }, product.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "product-intro"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "product-price"
+    }, product.price), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "product-detail"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "product-stock"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
+      className: "icon"
+    }, "\uEECB"), " \u5EAB\u5B58 ", product.stock))));
+  }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "Loading");
+}
 
 /***/ }),
 
@@ -3078,11 +3528,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/index.js");
 /* harmony import */ var _pages_product_detail__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../pages/product-detail */ "./src/client/pages/product-detail.js");
 /* harmony import */ var _pages_homepage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../pages/homepage */ "./src/client/pages/homepage.js");
 /* harmony import */ var _pages_market__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../pages/market */ "./src/client/pages/market.js");
 /* harmony import */ var _pages_product_list__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../pages/product-list */ "./src/client/pages/product-list.js");
+/* harmony import */ var _pages_account__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../pages/account */ "./src/client/pages/account.js");
+
 
 
 
@@ -3099,12 +3551,15 @@ __webpack_require__.r(__webpack_exports__);
     path: '/market',
     element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_pages_product_list__WEBPACK_IMPORTED_MODULE_4__["default"], null)
   }, {
-    path: '/market/:id',
+    path: '/market/:name',
     element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_pages_product_detail__WEBPACK_IMPORTED_MODULE_1__["default"], null)
   }]
 }, {
+  path: '/account',
+  element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_pages_account__WEBPACK_IMPORTED_MODULE_5__["default"], null)
+}, {
   path: '*',
-  element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Outlet, null)
+  element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Outlet, null)
 }]);
 
 /***/ }),
@@ -3127,13 +3582,13 @@ __webpack_require__.r(__webpack_exports__);
 const store = function () {
   const configs = {
     productList: {
-      url: 'api/product/all',
+      url: 'api/products/',
       method: 'get'
     },
 
-    productDetail(id) {
+    productDetail(name) {
       return {
-        url: `api/product/detail?id=${id}`,
+        url: encodeURI(`api/products/${name}`),
         method: 'get'
       };
     }
@@ -4751,6 +5206,394 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 	return to;
 };
+
+
+/***/ }),
+
+/***/ "./node_modules/react-cookies/build/cookie.js":
+/*!****************************************************!*\
+  !*** ./node_modules/react-cookies/build/cookie.js ***!
+  \****************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+exports.load = load;
+exports.loadAll = loadAll;
+exports.select = select;
+exports.save = save;
+exports.remove = remove;
+exports.setRawCookie = setRawCookie;
+exports.plugToRequest = plugToRequest;
+
+var _cookie = __webpack_require__(/*! cookie */ "./node_modules/react-cookies/node_modules/cookie/index.js");
+
+var _cookie2 = _interopRequireDefault(_cookie);
+
+var _objectAssign = __webpack_require__(/*! object-assign */ "./node_modules/object-assign/index.js");
+
+var _objectAssign2 = _interopRequireDefault(_objectAssign);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var IS_NODE = typeof document === 'undefined' || typeof process !== 'undefined' && process.env && "development" === 'test';
+var _rawCookie = {};
+var _res = void 0;
+
+function _isResWritable() {
+  return _res && !_res.headersSent;
+}
+
+function load(name, doNotParse) {
+  var cookies = IS_NODE ? _rawCookie : _cookie2.default.parse(document.cookie);
+  var cookieVal = cookies && cookies[name];
+
+  if (typeof doNotParse === 'undefined') {
+    doNotParse = !cookieVal || cookieVal[0] !== '{' && cookieVal[0] !== '[';
+  }
+
+  if (!doNotParse) {
+    try {
+      cookieVal = JSON.parse(cookieVal);
+    } catch (err) {
+      // Not serialized object
+    }
+  }
+
+  return cookieVal;
+}
+
+function loadAll(doNotParse) {
+  var cookies = IS_NODE ? _rawCookie : _cookie2.default.parse(document.cookie);
+  var cookieVal = cookies;
+
+  if (typeof doNotParse === 'undefined') {
+    doNotParse = !cookieVal || cookieVal[0] !== '{' && cookieVal[0] !== '[';
+  }
+
+  if (!doNotParse) {
+    try {
+      cookieVal = JSON.parse(cookieVal);
+    } catch (err) {
+      // Not serialized object
+    }
+  }
+
+  return cookieVal;
+}
+
+function select(regex) {
+  var cookies = IS_NODE ? _rawCookie : _cookie2.default.parse(document.cookie);
+
+  if (!cookies) {
+    return {};
+  }
+
+  if (!regex) {
+    return cookies;
+  }
+
+  return Object.keys(cookies).reduce(function (accumulator, name) {
+    if (!regex.test(name)) {
+      return accumulator;
+    }
+
+    var newCookie = {};
+    newCookie[name] = cookies[name];
+    return (0, _objectAssign2.default)({}, accumulator, newCookie);
+  }, {});
+}
+
+function save(name, val, opt) {
+  _rawCookie[name] = val;
+
+  // Allow you to work with cookies as objects.
+  if ((typeof val === 'undefined' ? 'undefined' : _typeof(val)) === 'object') {
+    _rawCookie[name] = JSON.stringify(val);
+  }
+
+  // Cookies only work in the browser
+  if (!IS_NODE) {
+    document.cookie = _cookie2.default.serialize(name, _rawCookie[name], opt);
+  }
+
+  if (_isResWritable() && _res.cookie) {
+    _res.cookie(name, val, opt);
+  }
+}
+
+function remove(name, opt) {
+  delete _rawCookie[name];
+
+  if (typeof opt === 'undefined') {
+    opt = {};
+  } else if (typeof opt === 'string') {
+    // Will be deprecated in future versions
+    opt = { path: opt };
+  } else {
+    // Prevent mutation of opt below
+    opt = (0, _objectAssign2.default)({}, opt);
+  }
+
+  if (typeof document !== 'undefined') {
+    opt.expires = new Date(1970, 1, 1, 0, 0, 1);
+    opt.maxAge = 0;
+    document.cookie = _cookie2.default.serialize(name, '', opt);
+  }
+
+  if (_isResWritable() && _res.clearCookie) {
+    _res.clearCookie(name, opt);
+  }
+}
+
+function setRawCookie(rawCookie) {
+  if (rawCookie) {
+    _rawCookie = _cookie2.default.parse(rawCookie);
+  } else {
+    _rawCookie = {};
+  }
+}
+
+function plugToRequest(req, res) {
+  if (req.cookie) {
+    _rawCookie = req.cookie;
+  } else if (req.cookies) {
+    _rawCookie = req.cookies;
+  } else if (req.headers && req.headers.cookie) {
+    setRawCookie(req.headers.cookie);
+  } else {
+    _rawCookie = {};
+  }
+
+  _res = res;
+
+  return function unplug() {
+    _res = null;
+    _rawCookie = {};
+  };
+}
+
+exports["default"] = {
+  setRawCookie: setRawCookie,
+  load: load,
+  loadAll: loadAll,
+  select: select,
+  save: save,
+  remove: remove,
+  plugToRequest: plugToRequest
+};
+
+/***/ }),
+
+/***/ "./node_modules/react-cookies/node_modules/cookie/index.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/react-cookies/node_modules/cookie/index.js ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+/*!
+ * cookie
+ * Copyright(c) 2012-2014 Roman Shtylman
+ * Copyright(c) 2015 Douglas Christopher Wilson
+ * MIT Licensed
+ */
+
+
+
+/**
+ * Module exports.
+ * @public
+ */
+
+exports.parse = parse;
+exports.serialize = serialize;
+
+/**
+ * Module variables.
+ * @private
+ */
+
+var decode = decodeURIComponent;
+var encode = encodeURIComponent;
+var pairSplitRegExp = /; */;
+
+/**
+ * RegExp to match field-content in RFC 7230 sec 3.2
+ *
+ * field-content = field-vchar [ 1*( SP / HTAB ) field-vchar ]
+ * field-vchar   = VCHAR / obs-text
+ * obs-text      = %x80-FF
+ */
+
+var fieldContentRegExp = /^[\u0009\u0020-\u007e\u0080-\u00ff]+$/;
+
+/**
+ * Parse a cookie header.
+ *
+ * Parse the given cookie header string into an object
+ * The object has the various cookies as keys(names) => values
+ *
+ * @param {string} str
+ * @param {object} [options]
+ * @return {object}
+ * @public
+ */
+
+function parse(str, options) {
+  if (typeof str !== 'string') {
+    throw new TypeError('argument str must be a string');
+  }
+
+  var obj = {}
+  var opt = options || {};
+  var pairs = str.split(pairSplitRegExp);
+  var dec = opt.decode || decode;
+
+  for (var i = 0; i < pairs.length; i++) {
+    var pair = pairs[i];
+    var eq_idx = pair.indexOf('=');
+
+    // skip things that don't look like key=value
+    if (eq_idx < 0) {
+      continue;
+    }
+
+    var key = pair.substr(0, eq_idx).trim()
+    var val = pair.substr(++eq_idx, pair.length).trim();
+
+    // quoted values
+    if ('"' == val[0]) {
+      val = val.slice(1, -1);
+    }
+
+    // only assign once
+    if (undefined == obj[key]) {
+      obj[key] = tryDecode(val, dec);
+    }
+  }
+
+  return obj;
+}
+
+/**
+ * Serialize data into a cookie header.
+ *
+ * Serialize the a name value pair into a cookie string suitable for
+ * http headers. An optional options object specified cookie parameters.
+ *
+ * serialize('foo', 'bar', { httpOnly: true })
+ *   => "foo=bar; httpOnly"
+ *
+ * @param {string} name
+ * @param {string} val
+ * @param {object} [options]
+ * @return {string}
+ * @public
+ */
+
+function serialize(name, val, options) {
+  var opt = options || {};
+  var enc = opt.encode || encode;
+
+  if (typeof enc !== 'function') {
+    throw new TypeError('option encode is invalid');
+  }
+
+  if (!fieldContentRegExp.test(name)) {
+    throw new TypeError('argument name is invalid');
+  }
+
+  var value = enc(val);
+
+  if (value && !fieldContentRegExp.test(value)) {
+    throw new TypeError('argument val is invalid');
+  }
+
+  var str = name + '=' + value;
+
+  if (null != opt.maxAge) {
+    var maxAge = opt.maxAge - 0;
+    if (isNaN(maxAge)) throw new Error('maxAge should be a Number');
+    str += '; Max-Age=' + Math.floor(maxAge);
+  }
+
+  if (opt.domain) {
+    if (!fieldContentRegExp.test(opt.domain)) {
+      throw new TypeError('option domain is invalid');
+    }
+
+    str += '; Domain=' + opt.domain;
+  }
+
+  if (opt.path) {
+    if (!fieldContentRegExp.test(opt.path)) {
+      throw new TypeError('option path is invalid');
+    }
+
+    str += '; Path=' + opt.path;
+  }
+
+  if (opt.expires) {
+    if (typeof opt.expires.toUTCString !== 'function') {
+      throw new TypeError('option expires is invalid');
+    }
+
+    str += '; Expires=' + opt.expires.toUTCString();
+  }
+
+  if (opt.httpOnly) {
+    str += '; HttpOnly';
+  }
+
+  if (opt.secure) {
+    str += '; Secure';
+  }
+
+  if (opt.sameSite) {
+    var sameSite = typeof opt.sameSite === 'string'
+      ? opt.sameSite.toLowerCase() : opt.sameSite;
+
+    switch (sameSite) {
+      case true:
+        str += '; SameSite=Strict';
+        break;
+      case 'lax':
+        str += '; SameSite=Lax';
+        break;
+      case 'strict':
+        str += '; SameSite=Strict';
+        break;
+      default:
+        throw new TypeError('option sameSite is invalid');
+    }
+  }
+
+  return str;
+}
+
+/**
+ * Try decoding a string using a decoding function.
+ *
+ * @param {string} str
+ * @param {function} decode
+ * @private
+ */
+
+function tryDecode(str, decode) {
+  try {
+    return decode(str);
+  } catch (e) {
+    return str;
+  }
+}
 
 
 /***/ }),
@@ -36123,16 +36966,20 @@ var __webpack_exports__ = {};
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
 /* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./routes */ "./src/client/routes/index.js");
 /* harmony import */ var _app__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./app */ "./src/client/app.js");
+/* harmony import */ var react_cookies__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-cookies */ "./node_modules/react-cookies/build/cookie.js");
+/* harmony import */ var _cookie__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./cookie */ "./src/client/cookie/index.js");
 
 
 
 
 
-Promise.all((0,react_router_dom__WEBPACK_IMPORTED_MODULE_4__.matchRoutes)(_routes__WEBPACK_IMPORTED_MODULE_2__["default"], location.pathname).map(function ({
+
+
+Promise.all((0,react_router_dom__WEBPACK_IMPORTED_MODULE_6__.matchRoutes)(_routes__WEBPACK_IMPORTED_MODULE_2__["default"], location.pathname).map(function ({
   params,
   route: {
     element
@@ -36140,7 +36987,9 @@ Promise.all((0,react_router_dom__WEBPACK_IMPORTED_MODULE_4__.matchRoutes)(_route
 }) {
   return element?.type.getInitialData && element.type.getInitialData(params);
 })).then(function () {
-  react_dom__WEBPACK_IMPORTED_MODULE_1__.hydrate( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.StrictMode, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.BrowserRouter, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_app__WEBPACK_IMPORTED_MODULE_3__["default"], null))), document.querySelector('[data-reactroot]'));
+  react_dom__WEBPACK_IMPORTED_MODULE_1__.hydrate( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.StrictMode, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__.BrowserRouter, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_app__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    cookies: (0,_cookie__WEBPACK_IMPORTED_MODULE_5__.cookieHandler)(react_cookies__WEBPACK_IMPORTED_MODULE_4__["default"])
+  }))), document.querySelector('[data-reactroot]'));
 });
 })();
 

@@ -1,8 +1,9 @@
-export default function list () {
+export default function list ( req, res, conn ) {
 
-    const queryString = 'SELECT *, \'/api/files/get?name=\' & `files`.`name` AS `url` FROM `files`;';
-    const values = null;
-    const callback = null;
+    const queryString = 'SELECT *, CONCAT(\'/api/files/\', `files`.`name`) AS `url` FROM `files`;';
 
-    return [ queryString, values, callback ];
+    conn.query( queryString, [], function ( err, results ) {
+        if ( err ) throw err;
+        res.send( results );
+    });
 }

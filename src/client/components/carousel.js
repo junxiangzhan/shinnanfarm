@@ -47,7 +47,7 @@ export default class _Carousel extends React.Component {
     constructor(props) {
         super(props);
 
-        const items = this.props.children.filter(element => element);
+        const items = this.props.children;
 
         this.state = {
             items,
@@ -56,9 +56,6 @@ export default class _Carousel extends React.Component {
             timeout: this.props.interval ?? 5000
         };
 
-        this.componentDidMount = this.componentDidMount.bind(this);
-        this.componentWillUnmount = this.componentWillUnmount.bind(this);
-        this.componentDidUpdate = this.componentDidUpdate.bind(this);
         this.nextTurn = this.nextTurn.bind(this);
         this.renderItems = this.renderItems.bind(this);
     }
@@ -70,17 +67,15 @@ export default class _Carousel extends React.Component {
     }
 
     componentWillUnmount() {
-        if (this.state.timeout)
-            clearInterval(this.state.interval);
+        if (this.state.timeout) clearInterval(this.state.interval);
     }
 
     componentDidUpdate() {
-        if (this.state.isAnimating)
-            setTimeout(function () {
-                this.setState({
-                    isAnimating: false
-                });
-            }.bind(this), 1000);
+        if (this.state.isAnimating) setTimeout(function () {
+            this.setState({
+                isAnimating: false
+            });
+        }.bind(this), 1000);
     }
 
     nextTurn() {
@@ -93,7 +88,7 @@ export default class _Carousel extends React.Component {
     renderItems() {
         const { current, items, isAnimating } = this.state;
 
-        return items.map(function (item, index) {
+        return items.map( function (item, index) {
             const className = [
                 "carousel-item",
                 current == index && "active",
@@ -110,9 +105,10 @@ export default class _Carousel extends React.Component {
 
     render() {
         const { className, children, ...props } = this.props;
-        return <div className={['carousel', className].filter(Boolean).join(" ")} {...props}>
+
+        return <div className={[ 'carousel', className ].filter( Boolean ).join(" ")} {...props}>
             <div className="carousel-inner">
-                {this.renderItems()}
+                { this.renderItems() }
             </div>
         </div>;
     }

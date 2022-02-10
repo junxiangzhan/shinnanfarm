@@ -26,7 +26,7 @@ export default class Market extends React.Component {
 
     render () {
         return <div id="market">
-            <div className="navbar-space container" style={{ maxWidth: 'var(--max-width-container-lg)' }}>
+            <div className="navbar-space container" style={{ maxWidth: 'var(--max-width-container-xl)' }}>
                 <Searchbar />
                 <Outlet />
             </div>

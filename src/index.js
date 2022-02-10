@@ -1,5 +1,6 @@
 import express from "express";
 import fileUpload from "express-fileupload";
+import cookieParser from "cookie-parser";
 
 import apis from "./apis";
 import defaultRoute from "./default";
@@ -9,6 +10,8 @@ const app = express();
 app.disable( 'x-powered-by' );
 
 app.use( fileUpload())
+
+app.use( cookieParser())
 
 app.use( function ( req, res, next ) {
     res.set( 'x-content-type-options', 'nosniff' );
@@ -20,7 +23,7 @@ app.use( express.static( 'public' ));
 app.all([ 
     '/api',
     '/api/:api',
-    '/api/:api/:method',
+    '/api/:api/:name',
     '/api/*'
 ], apis );
 
