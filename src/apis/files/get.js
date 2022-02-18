@@ -13,12 +13,12 @@ export default function get ( req, res, conn ) {
             reason: err
         });
 
-        if ( !results.length ) return res.send({
+        if ( !results?.length ) return res.send({
             type: 'error',
             message: `The file:'${ name }' was not found.`
         });
 
-        const { type } = results[0];
+        const { type } = results?.[0];
 
         res.set( 'content-type', type );
 

@@ -3,14 +3,13 @@ import userManager from "../../user-manager";
 export default function cookieHandler ( _cookie ) {
 
     const cookie = _cookie ?? {};
-
     return {
         getUser () {
             return cookie.userToken;
         },
 
         getCart () {
-            return cookie.cart;
+            return JSON.parse( cookie.userCart ?? "{}" );
         },
 
         checkUser () {

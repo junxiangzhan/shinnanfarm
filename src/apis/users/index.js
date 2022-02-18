@@ -1,5 +1,5 @@
 import login from './login';
-import checkToken from './checkToken';
+import details from './details';
 import register from './register';
 
 export default function users ( req, res, conn ) {
@@ -9,7 +9,7 @@ export default function users ( req, res, conn ) {
 
     const methods = {
         login,
-        token: checkToken,
+        details,
         register
     };
 

@@ -24,236 +24,334 @@
     </head>
     <body>
         <script>
-            const filenameRule = /^[\w\-. ]+$/gm;
-            let state = 'get';
+            {
+                const filenameRule = /^[\w\-. ]+$/gm;
+                let state = 'get';
 
-            const fieldsets = {
-                get: {
-                    legendText: document.createTextNode( '取得檔案' ),
-                    form: (function () {
-                        const $filenameLabel = document.createElement( 'label' );
-                        $filenameLabel.appendChild( document.createTextNode('檔案名稱：'));
+                const fieldsets = {
+                    get: {
+                        legendText: document.createTextNode( '取得檔案' ),
+                        form: (function () {
+                            const $filenameLabel = document.createElement( 'label' );
+                            $filenameLabel.appendChild( document.createTextNode('檔案名稱：'));
 
-                        const $filename = document.createElement( 'input' );
-                        $filenameLabel.appendChild( $filename );
-                        $filename.name = 'name';
-                        $filename.type = 'text';
+                            const $filename = document.createElement( 'input' );
+                            $filenameLabel.appendChild( $filename );
+                            $filename.name = 'name';
+                            $filename.type = 'text';
 
-                        return [ $filenameLabel ];
-                    })()
-                },
+                            return [ $filenameLabel ];
+                        })()
+                    },
+                    
+                    post: {
+                        legendText: document.createTextNode( '上傳檔案' ),
+                        form: (function () {
+                            const $newFileLabel = document.createElement( 'label' );
+                            $newFileLabel.appendChild( document.createTextNode('上傳檔案：'));
+
+                            const $newFile = document.createElement( 'input' );
+                            $newFileLabel.appendChild( $newFile );
+                            $newFile.name = 'file';
+                            $newFile.type = 'file';
+
+                            const $filenameLabel = document.createElement( 'label' );
+                            $filenameLabel.appendChild( document.createTextNode('更改檔案名稱：'));
+
+                            const $filename = document.createElement( 'input' );
+                            $filenameLabel.appendChild( $filename );
+                            $filename.name = 'name';
+                            $filename.type = 'text';
+
+                            return [ $newFileLabel, document.createElement( 'br' ), $filenameLabel ];
+                        })()
+                    },
+                    
+                    put: {
+                        legendText: document.createTextNode( '更新檔案' ),
+                        form: (function () {
+                            const $filenameLabel = document.createElement( 'label' );
+                            $filenameLabel.appendChild( document.createTextNode('檔案名稱：'));
+
+                            const $filename = document.createElement( 'input' );
+                            $filenameLabel.appendChild( $filename );
+                            $filename.name = 'name';
+                            $filename.type = 'text';
+                            
+                            const $newFileLabel = document.createElement( 'label' );
+                            $newFileLabel.appendChild( document.createTextNode('更新檔案：'));
+
+                            const $newFile = document.createElement( 'input' );
+                            $newFileLabel.appendChild( $newFile );
+                            $newFile.name = 'file';
+                            $newFile.type = 'file';
+
+                            const $fileNewNameLabel = document.createElement( 'label' );
+                            $fileNewNameLabel.appendChild( document.createTextNode('更改檔案名稱：'));
+
+                            const $fileNewName = document.createElement( 'input' );
+                            $fileNewNameLabel.appendChild( $fileNewName );
+                            $fileNewName.name = 'newName';
+                            $fileNewName.type = 'text';
+
+                            return [ $filenameLabel, document.createElement( 'br' ), $newFileLabel, document.createElement( 'br' ), $fileNewNameLabel ];
+                        })()
+                    },
+                    
+                    delete: {
+                        legendText: document.createTextNode( '刪除檔案' ),
+                        form: (function () {
+                            const $filenameLabel = document.createElement( 'label' );
+                            $filenameLabel.appendChild( document.createTextNode('檔案名稱：'));
+
+                            const $filename = document.createElement( 'input' );
+                            $filenameLabel.appendChild( $filename );
+                            $filename.type = 'text';
+                            $filename.name = 'name';
+
+                            return [ $filenameLabel ];
+                        })()
+                    }
+                };
+
+                const $heading = document.createElement('b');
+                document.body.appendChild($heading);
+                $heading.appendChild( document.createTextNode('檔案處理'));
+        
+                const $form = document.createElement('form');
+        
+                const $methodLabel = document.createElement('label');
+                $form.appendChild( $methodLabel );
+                $methodLabel.appendChild( document.createTextNode('操作方法：'));
                 
-                post: {
-                    legendText: document.createTextNode( '上傳檔案' ),
-                    form: (function () {
-                        const $newFileLabel = document.createElement( 'label' );
-                        $newFileLabel.appendChild( document.createTextNode('上傳檔案：'));
+                const $method = document.createElement('select');
+                $methodLabel.appendChild( $method );
+                $method.ariaLabel = "method";
+                for ( let [ method, { legendText }] of Object.entries( fieldsets )) {
+                    const $option = document.createElement('option');
+                    $option.appendChild( legendText.cloneNode());
+                    $option.value = method;
+                    $method.appendChild( $option );
+                };
 
-                        const $newFile = document.createElement( 'input' );
-                        $newFileLabel.appendChild( $newFile );
-                        $newFile.name = 'file';
-                        $newFile.type = 'file';
+                const $fieldset = document.createElement('fieldset');
+                $form.appendChild( $fieldset );
+                $fieldset.style.marginTop = CSS.em( .5 );
+                $fieldset.style.marginBottom = CSS.em( .5 );
+                $fieldset.style.lineHeight = CSS.em( 2 );
 
-                        const $filenameLabel = document.createElement( 'label' );
-                        $filenameLabel.appendChild( document.createTextNode('更改檔案名稱：'));
+                const $legend = document.createElement('legend');
+                $fieldset.append( $legend );
+                $legend.style.lineHeight = CSS.em( 1 );
 
-                        const $filename = document.createElement( 'input' );
-                        $filenameLabel.appendChild( $filename );
-                        $filename.name = 'name';
-                        $filename.type = 'text';
+                const $submit = document.createElement('button');
+                $form.append( $submit );
+                $submit.appendChild( document.createTextNode( '送出' ));
+                $submit.type = 'submit';
 
-                        return [ $newFileLabel, document.createElement( 'br' ), $filenameLabel ];
-                    })()
-                },
-                
-                put: {
-                    legendText: document.createTextNode( '更新檔案' ),
-                    form: (function () {
-                        const $filenameLabel = document.createElement( 'label' );
-                        $filenameLabel.appendChild( document.createTextNode('檔案名稱：'));
-
-                        const $filename = document.createElement( 'input' );
-                        $filenameLabel.appendChild( $filename );
-                        $filename.name = 'name';
-                        $filename.type = 'text';
-                        
-                        const $newFileLabel = document.createElement( 'label' );
-                        $newFileLabel.appendChild( document.createTextNode('更新檔案：'));
-
-                        const $newFile = document.createElement( 'input' );
-                        $newFileLabel.appendChild( $newFile );
-                        $newFile.name = 'file';
-                        $newFile.type = 'file';
-
-                        const $fileNewNameLabel = document.createElement( 'label' );
-                        $fileNewNameLabel.appendChild( document.createTextNode('更改檔案名稱：'));
-
-                        const $fileNewName = document.createElement( 'input' );
-                        $fileNewNameLabel.appendChild( $fileNewName );
-                        $fileNewName.name = 'newName';
-                        $fileNewName.type = 'text';
-
-                        return [ $filenameLabel, document.createElement( 'br' ), $newFileLabel, document.createElement( 'br' ), $fileNewNameLabel ];
-                    })()
-                },
-                
-                delete: {
-                    legendText: document.createTextNode( '刪除檔案' ),
-                    form: (function () {
-                        const $filenameLabel = document.createElement( 'label' );
-                        $filenameLabel.appendChild( document.createTextNode('檔案名稱：'));
-
-                        const $filename = document.createElement( 'input' );
-                        $filenameLabel.appendChild( $filename );
-                        $filename.type = 'text';
-                        $filename.name = 'name';
-
-                        return [ $filenameLabel ];
-                    })()
+                function renderFieldset() {
+                    const fieldsetContent = fieldsets[ state ];
+                    $legend.replaceChildren( fieldsetContent.legendText );
+                    $fieldset.replaceChildren( $legend, ...fieldsetContent.form );
                 }
-            };
-
-            const $heading = document.createElement('b');
-            document.body.appendChild($heading);
-            $heading.appendChild( document.createTextNode('檔案處理'));
-    
-            const $form = document.createElement('form');
-    
-            const $methodLabel = document.createElement('label');
-            $form.appendChild( $methodLabel );
-            $methodLabel.appendChild( document.createTextNode('操作方法：'));
-            
-            const $method = document.createElement('select');
-            $methodLabel.appendChild( $method );
-            $method.ariaLabel = "method";
-            for ( let [ method, { legendText }] of Object.entries( fieldsets )) {
-                const $option = document.createElement('option');
-                $option.appendChild( legendText.cloneNode());
-                $option.value = method;
-                $method.appendChild( $option );
-            };
-
-            const $fieldset = document.createElement('fieldset');
-            $form.appendChild( $fieldset );
-            $fieldset.style.marginTop = CSS.em( .5 );
-            $fieldset.style.marginBottom = CSS.em( .5 );
-            $fieldset.style.lineHeight = CSS.em( 2 );
-
-            const $legend = document.createElement('legend');
-            $fieldset.append( $legend );
-            $legend.style.lineHeight = CSS.em( 1 );
-
-            const $submit = document.createElement('button');
-            $form.append( $submit );
-            $submit.appendChild( document.createTextNode( '送出' ));
-            $submit.type = 'submit';
-
-            function renderFieldset() {
-                const fieldsetContent = fieldsets[ state ];
-                $legend.replaceChildren( fieldsetContent.legendText );
-                $fieldset.replaceChildren( $legend, ...fieldsetContent.form );
-            }
-            
-            renderFieldset();
-
-            document.body.appendChild($form);
-            
-            const $data = document.createElement('pre');
-            document.body.appendChild($data);
-
-            async function $$get ( $fileName ) {
-                const fileName = $fileName.value;
-                const response = await fetch( `/api/files/${ fileName }`, {
-                    method: 'get'
-                });
                 
-                const blob = await response.blob();
-
-                const { type } = blob;
-                
-                const imgRegExp = /image\/.*/gm;
-                if ( type.match( imgRegExp )) {
-                    const $img = document.createElement('img');
-                    $img.setAttribute( 'src', URL.createObjectURL( blob ));
-
-                    return $data.replaceChildren( $img );
-                }
-
-                const textRegExp = /text\/.*/gm;
-                if ( type.match( textRegExp )) {
-                    return $data.replaceChildren( await blob.text());
-                }
-
-                const jsonRegExp = /application\/json/gm;
-                if ( type.match( jsonRegExp )) {
-                    const jsonString = JSON.parse( await blob.text());
-                    return $data.replaceChildren( JSON.stringify( jsonString, null, '  ' ));
-                }
-
-                $data.replaceChildren( URL.createObjectURL( blob ));
-            }
-
-            async function $$post ( $fileName, $file ) {
-                const file = $file.files[0];
-                const fileName = $fileName.value || file?.name;
-
-                if ( fileName.match( /[/\\*?:"<>|]/gm )) return alert('檔案名稱中不得出現下列字形：\n/\\*?:"<>|');
-
-                const reqBody = new FormData();
-                reqBody.append( 'file', file );
-
-                const response = await fetch( `/api/files/${ fileName }`, {
-                    method: 'post',
-                    body: reqBody
-                });
-
-                return $data.replaceChildren( JSON.stringify( await response.json(), null, '  ' ));
-            }
-
-            async function $$put ( $fileName, $file, $newName ) {
-                const fileName = $fileName.value;
-                const file = $file.files[0];
-                const name = $newName.value;
-
-                if ( name.match( /[/\\*?:"<>|]/gm )) return alert('檔案名稱中不得出現下列字形：\n/\\*?:"<>|');
-
-                const reqBody = new FormData();
-                if ( file ) reqBody.append( 'file', file );
-                if ( name ) reqBody.append( 'name', name );
-
-                const response = await fetch( `/api/files/${ fileName }`, {
-                    method: 'put',
-                    body: reqBody
-                });
-
-                return $data.replaceChildren( JSON.stringify( await response.json(), null, '  ' ));
-            }
-
-            async function $$delete ( $fileName ) {
-                const fileName = $fileName.value;
-                
-                const response = await fetch( `/api/files/${ fileName }`, {
-                    method: 'delete'
-                });
-
-                return $data.replaceChildren( JSON.stringify( await response.json(), null, '  ' ));
-            }
-
-            $form.addEventListener( 'submit', function ( event ) {
-                event.preventDefault();
-                const { name: $fileName, file: $file, newName: $newName } = $form;
-                const method = state;
-
-                if ( method == 'get' ) return $$get( $fileName );
-                if ( method == 'post' ) return $$post( $fileName, $file );
-                if ( method == 'put' ) return $$put( $fileName, $file, $newName );
-                if ( method == 'delete' ) return $$delete( $fileName );
-            });
-
-            $method.addEventListener( 'change', function ( event ) {
-                state = $method.value;
                 renderFieldset();
-            });
+
+                document.body.appendChild($form);
+                
+                const $data = document.createElement('pre');
+                document.body.appendChild($data);
+
+                async function $$get ( $fileName ) {
+                    const fileName = $fileName.value;
+                    const response = await fetch( `/api/files/${ fileName }`, {
+                        method: 'get'
+                    });
+                    
+                    const blob = await response.blob();
+
+                    const { type } = blob;
+                    
+                    const imgRegExp = /image\/.*/gm;
+                    if ( type.match( imgRegExp )) {
+                        const $img = document.createElement('img');
+                        $img.setAttribute( 'src', URL.createObjectURL( blob ));
+
+                        return $data.replaceChildren( $img );
+                    }
+
+                    const textRegExp = /text\/.*/gm;
+                    if ( type.match( textRegExp )) {
+                        return $data.replaceChildren( await blob.text());
+                    }
+
+                    const jsonRegExp = /application\/json/gm;
+                    if ( type.match( jsonRegExp )) {
+                        const jsonString = JSON.parse( await blob.text());
+                        return $data.replaceChildren( JSON.stringify( jsonString, null, '  ' ));
+                    }
+
+                    $data.replaceChildren( URL.createObjectURL( blob ));
+                }
+
+                async function $$post ( $fileName, $file ) {
+                    const file = $file.files[0];
+                    const fileName = $fileName.value || file?.name;
+
+                    if ( fileName.match( /[/\\*?:"<>|]/gm )) return alert('檔案名稱中不得出現下列字形：\n/\\*?:"<>|');
+
+                    const reqBody = new FormData();
+                    reqBody.append( 'file', file );
+
+                    const response = await fetch( `/api/files/${ fileName }`, {
+                        method: 'post',
+                        body: reqBody
+                    });
+
+                    return $data.replaceChildren( JSON.stringify( await response.json(), null, '  ' ));
+                }
+
+                async function $$put ( $fileName, $file, $newName ) {
+                    const fileName = $fileName.value;
+                    const file = $file.files[0];
+                    const name = $newName.value;
+
+                    if ( name.match( /[/\\*?:"<>|]/gm )) return alert('檔案名稱中不得出現下列字形：\n/\\*?:"<>|');
+
+                    const reqBody = new FormData();
+                    if ( file ) reqBody.append( 'file', file );
+                    if ( name ) reqBody.append( 'name', name );
+
+                    const response = await fetch( `/api/files/${ fileName }`, {
+                        method: 'put',
+                        body: reqBody
+                    });
+
+                    return $data.replaceChildren( JSON.stringify( await response.json(), null, '  ' ));
+                }
+
+                async function $$delete ( $fileName ) {
+                    const fileName = $fileName.value;
+                    
+                    const response = await fetch( `/api/files/${ fileName }`, {
+                        method: 'delete'
+                    });
+
+                    return $data.replaceChildren( JSON.stringify( await response.json(), null, '  ' ));
+                }
+
+                $form.addEventListener( 'submit', function ( event ) {
+                    event.preventDefault();
+                    const { name: $fileName, file: $file, newName: $newName } = $form;
+                    const method = state;
+
+                    if ( method == 'get' ) return $$get( $fileName );
+                    if ( method == 'post' ) return $$post( $fileName, $file );
+                    if ( method == 'put' ) return $$put( $fileName, $file, $newName );
+                    if ( method == 'delete' ) return $$delete( $fileName );
+                });
+
+                $method.addEventListener( 'change', function ( event ) {
+                    state = $method.value;
+                    renderFieldset();
+                });
+            }
+
+            {
+                const $heading = document.createElement('b');
+                document.body.appendChild($heading);
+                $heading.appendChild( document.createTextNode('sql 執行'));
+        
+                const $form = document.createElement('form');
+
+                const $hostLabel = document.createElement('label');
+                $form.appendChild( $hostLabel );
+                $hostLabel.appendChild( document.createTextNode('路徑：'));
+                $hostLabel.style.display = 'block';
+                $hostLabel.style.marginBottom = CSS.px(5);
+
+                const $host = document.createElement('input');
+                $hostLabel.appendChild( $host );
+                $host.value = "http://[::1]/sql.php";
+
+                const $userNameLabel = document.createElement('label');
+                $form.appendChild( $userNameLabel );
+                $userNameLabel.appendChild( document.createTextNode('使用者名稱：'));
+                $userNameLabel.style.display = 'block';
+                $userNameLabel.style.marginBottom = CSS.px(5);
+
+                const $userName = document.createElement('input');
+                $userNameLabel.appendChild( $userName );
+
+                const $passwordLabel = document.createElement('label');
+                $form.appendChild( $passwordLabel );
+                $passwordLabel.appendChild( document.createTextNode('使用者密碼：'));
+                $passwordLabel.style.display = 'block';
+                $passwordLabel.style.marginBottom = CSS.px(5);
+
+                const $password = document.createElement('input');
+                $passwordLabel.appendChild( $password );
+                $password.type = 'password';
+
+                const $databaseLabel = document.createElement('label');
+                $form.appendChild( $databaseLabel );
+                $databaseLabel.appendChild( document.createTextNode('資料庫名稱：'));
+                $databaseLabel.style.display = 'block';
+                $databaseLabel.style.marginBottom = CSS.px(5);
+
+                const $database = document.createElement('input');
+                $databaseLabel.appendChild( $database );
+
+                const $queryStringLabel = document.createElement('label');
+                $form.appendChild( $queryStringLabel );
+                $queryStringLabel.appendChild( document.createTextNode('查詢語句：'));
+                $queryStringLabel.appendChild( document.createElement('br'));
+                $queryStringLabel.style.display = 'block';
+                $queryStringLabel.style.marginBottom = CSS.px(5);
+
+                const $queryString = document.createElement('textarea');
+                $queryStringLabel.appendChild( $queryString );
+                $queryString.style.width = CSS.percent(100);
+                $queryString.style.minHeight = CSS.rem(2);
+                $queryString.style.resize = "vertical";
+
+                const $submit = document.createElement('button');
+                $form.append( $submit );
+                $submit.appendChild( document.createTextNode( '送出' ));
+                $submit.type = 'submit';
+
+                document.body.appendChild($form);
+
+                const $data = document.createElement('pre');
+                document.body.appendChild($data);
+
+                async function $$send ( $arguments ) {
+                    const { host, user, password, database, queryString } = $arguments;
+
+                    const reqBody = new FormData();
+                    reqBody.append( 'connection', JSON.stringify({ user, password, database }));
+                    reqBody.append( 'query', JSON.stringify({ queryString }));
+
+                    const response = await fetch( host, {
+                        method: 'post',
+                        body: reqBody
+                    });
+
+                    return $data.replaceChildren( JSON.stringify( await response.json(), null, '  ' ));
+                }
+
+                $form.addEventListener( 'submit', function ( event ) {
+                    event.preventDefault();
+
+                    const { value: host } = $host;
+                    const { value: user } = $userName;
+                    const { value: password } = $password;
+                    const { value: database } = $database;
+                    const { value: queryString } = $queryString;
+
+                    return $$send({ host, user, password, database, queryString });
+                });
+            }
         </script>
     </body>
 </html>

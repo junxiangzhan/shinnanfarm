@@ -1,6 +1,7 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { Link, Outlet } from "react-router-dom";
 import { useCookie } from "../cookie";
+import store from "../store";
 
 export default function Account () {
 
@@ -8,10 +9,15 @@ export default function Account () {
     const [ user, setUser ] = useState( cookie.getUser());
 
     useEffect( function () {
-        cookie.checkUser().catch( function () {
-            cookie.userLogout();
-            setUser( null );
+
+        const listenter = cookie.addListener( 'user', function () {
+            const user = cookie.getUser();
+            setUser( user );
         });
+
+        return function () {
+            cookie.removeListener( 'user', listenter );
+        }
     }, []);
 
     function login ( userName, password ) {
@@ -34,7 +40,7 @@ export default function Account () {
     }
     
     return <div id="account">
-        { user ? <AccountDetail logout={ logout } user={ user } />: <Forms login={ login } register={ register } /> }
+        { user ? <AccountDetail logout={ logout } user={ user } comfirmed={ comfirmed } />: <Forms login={ login } register={ register } /> }
     </div>;
 }
 
@@ -145,6 +151,31 @@ function RegisterForm ( props ) {
     </form>;
 }
 
+const AccountInformation = createContext();
+
 function AccountDetail ( props ) {
-    return <div>{ props.user }</div>;
+    const { user: userToken } = props;
+    const [ user, setUserDetail ] = useState( store.userDetail );
+
+    useEffect( function () {
+        if ( !user ) store.request( 'userDetail', userToken ).then( setUserDetail );
+    }, []);
+
+    return <div className="navbar-space container account-layout" style={{ maxWidth: "var(--max-width-container-xl)" }}>
+        <AccountMenu />
+        <AccountInformation.Provider value={ user }>
+            <Outlet />
+        </AccountInformation.Provider>
+    </div>;
+}
+
+function AccountMenu ( props ) {
+    return <div className="account-menu">
+        <Link to="/account">用戶資訊</Link>
+        <Link to="/account/orders">訂單記錄</Link>
+    </div>;
+}
+
+export function useAccountInformation () {
+    return useContext( AccountInformation );
 }

@@ -5,7 +5,6 @@ import { useCookie } from "../cookie";
 export default function Navbar () {
 
     const [ isCollapse, setCollapse ] = useState( true );
-    const [ isLogin ] = useState( false );
     const [ navbarCollapse, setNavbarCollapse ] = useState( null );
     const cookie = useCookie();
 
@@ -28,7 +27,7 @@ export default function Navbar () {
         setCollapse( !isCollapse );
     }
 
-    const [ user, setUser ] = useState( cookie.getUser() );
+    const [ user, setUser ] = useState( cookie.getUser());
 
     useEffect( function () {
         const listener = cookie.addListener( 'user', function () {
@@ -38,7 +37,7 @@ export default function Navbar () {
         return function () {
             cookie.removeListener( 'user', listener );
         };
-    }, [] );
+    }, []);
 
     return <nav id="navbar" role="navigation">
         <div className="navbar-container">

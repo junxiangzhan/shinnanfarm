@@ -9,8 +9,8 @@ const app = express();
 
 app.disable( 'x-powered-by' );
 
+app.use( express.json())
 app.use( fileUpload())
-
 app.use( cookieParser())
 
 app.use( function ( req, res, next ) {

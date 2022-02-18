@@ -21,6 +21,7 @@ export default function login ( req, res, conn ) {
         const user = {
             userName: results[0].account,
             password: results[0].password,
+            authority: results[0].authority
         }
 
         const token = userManager.setUser( user );

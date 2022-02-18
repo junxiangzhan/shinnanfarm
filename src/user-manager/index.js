@@ -40,7 +40,6 @@ const userManager = {
 }
 
 function generateToken ({ userName, password }) {
-    console.log( userName, password )
     const charsetList = [ ...userName, ...password ];
     const tokenList = [];
     for ( let i in charsetList.slice( 0, 10 )) {

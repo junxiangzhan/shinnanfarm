@@ -1,3 +1,4 @@
+import axios from "axios";
 import { createContext, useContext } from "react";
 
 const Cookie = createContext();
@@ -7,14 +8,16 @@ function cookieHandler ( cookie ) {
     const listeners = {};
 
     function triggerEvent( ...events ) {
+        const cookies = cookie.loadAll();
+
         for ( let event of events ) {
             
-            const eventListeners = listeners[ event ];
+            const eventListeners = listeners[ event ] ?? [];
             let tmp = true;
 
             for ( let { listener, once } of eventListeners ) {
                 if ( once ) tmp = false;
-                listener();
+                listener( cookies );
             };
 
             if ( tmp ) return ;
@@ -36,17 +39,17 @@ function cookieHandler ( cookie ) {
             reqBody.append( "password", password );
 
             return new Promise( function ( resolve, reject ) {
-                fetch( "/api/users/login", {
+                axios.request( {
+                    url: "/api/users/login",
                     method: "post",
-                    body: reqBody
+                    data: { userName, password }
                 }).then( function ( res ) {
-                    return res.json().then( function ( token ) {
-                        if ( token ) {
-                            cookie.save( 'userToken', token, { path: '/' });
-                            return resolve( token );
-                        };
-                        reject();
-                    });
+                    const token = res.data;
+                    if ( token ) {
+                        cookie.save( 'userToken', token, { path: '/' });
+                        return resolve( token );
+                    };
+                    reject();
                 });
             }).then( function ( token ) {
                 triggerEvent( 'user' );
@@ -68,17 +71,18 @@ function cookieHandler ( cookie ) {
 
             return new Promise( function ( resolve, reject ) {
 
-                fetch( "/api/users/register", {
+                axios.request( {
+                    url: "/api/users/register",
                     method: "post",
-                    body: reqBody
+                    data: { userName, password }
                 }).then( function ( res ) {
-                    return res.json().then( function ( result ) {
-                        if ( result.token ) {
-                            cookie.save( 'userToken', result.token, { path: '/' });
-                            return resolve( result.token );
-                        };
-                        reject();
-                    });
+                    const { token } = res.data;
+                    if ( token ) {
+                        cookie.save( 'userToken', token, { path: '/' });
+                        return resolve( token );
+                    };
+
+                    reject();
                 });
 
             }).then( function ( token ) {
@@ -87,15 +91,21 @@ function cookieHandler ( cookie ) {
             });
         },
 
-        cartSet ( productId, count ) {
-            const cart = cookie.load( "cart" );
-            if ( !cart ) return cookie.save( "cart", { [productId]: count }, { path: "/" });
-            if ( count ) return cart[ productId ] = count;
-            delete cart[ productId ];
+        cartSet ( productName, _count ) {
+            const cart = cookie.load( "userCart" ) ?? {};
+            const count = _count instanceof Function? _count( cart[ productName ] ?? 0 ): +_count;
+
+            cart[ productName ] = count;
+            if ( !count ) delete cart[ productName ];
+
+            cookie.save( "userCart", cart, { path: "/" });
+            triggerEvent( 'cart' );
+            return count;
         },
 
         cartClear () {
-            cookie.remove( "cart", { path: "/" })
+            cookie.remove( "userCart", { path: "/" });
+            triggerEvent( 'cart' );
         },
 
         getUser () {
@@ -103,25 +113,29 @@ function cookieHandler ( cookie ) {
         },
 
         checkUser () {
-            return new Promise( function ( resolve, reject ) {
+            return new Promise( function ( resolve ) {
 
-                const reqBody = new FormData();
-    
-                reqBody.append( "token", cookie.load( "userToken" ));
+                const token = cookie.load( "userToken" );
 
-                fetch( "/api/users/token", {
+                if ( !token ) return resolve( false );
+
+                axios.request( {
+                    url: "/api/users/details",
                     method: "post",
-                    body: reqBody
-                }).then( function ( res ) {
-                    return res.json().then( function ( result ) {
-                        return result ? resolve(): reject();
-                    });
+                    data: { token }
+                }).then( function ({ data: result }) {
+                    if ( !result ) {
+                        cookie.remove( "userToken", { path: "/" });
+                        triggerEvent( 'user' );
+                    }
+                    console.log('hi')
+                    return result;
                 });
             });
         },
 
         getCart () {
-            return cookie.load( "cart" );
+            return cookie.load( "userCart" ) ?? {};
         },
 
         addListener ( event, listenerFunction, option ) {

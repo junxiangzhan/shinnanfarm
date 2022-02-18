@@ -1,5 +1,7 @@
 const diction = {
-    IMG: [ 'images', JSON.parse ]
+    IMG: [ 'images', JSON.parse ],
+    INFO: [ 'information' ],
+    INTRO: [ 'introduce' ]
 };
 
 export default function detail ( req, res, conn ) {

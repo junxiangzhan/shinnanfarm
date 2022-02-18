@@ -13,13 +13,23 @@ const store = (function () {
                 method: 'get'
             };
         },
+
+        userDetail ( token ) {
+            return {
+                url: `api/users/details`,
+                method: 'post',
+                data: {
+                    token, detailed: true
+                }
+            }
+        }
     };
 
     const store = {
         async request ( name, ...arg ) {
             const config = configs[ name ] instanceof Function ? configs[ name ]( ...arg ): configs[ name ];
             return await axios.request( config ).then( function ( response ) {
-                Object.assign( store, { [name]: response.data } )
+                Object.assign( store, { [name]: response.data } );
                 return response.data;
             }.bind( this ));
         },
