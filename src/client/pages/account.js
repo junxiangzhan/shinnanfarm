@@ -1,46 +1,44 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
-import { useCookie } from "../cookie";
-import store from "../store";
+import { store, useService } from "../service";
 
 export default function Account () {
-
-    const cookie = useCookie();
-    const [ user, setUser ] = useState( cookie.getUser());
+    const service = useService();
+    const [ user, setUser ] = useState( service.getUser());
 
     useEffect( function () {
 
-        const listenter = cookie.addListener( 'user', function () {
-            const user = cookie.getUser();
+        const listenter = service.addListener( 'user', function () {
+            const user = service.getUser();
             setUser( user );
         });
 
         return function () {
-            cookie.removeListener( 'user', listenter );
+            service.removeListener( 'user', listenter );
         }
     }, []);
 
     function login ( userName, password ) {
-        return cookie.userLogin( userName, password ).then( function ( token ) {
+        return service.userLogin( userName, password ).then( function ( token ) {
             setUser( token );
             return token;
         });
     }
 
     function logout () {
-        cookie.userLogout();
+        service.userLogout();
         setUser( null );
     }
 
     function register ( userName, password ) {
-        return cookie.userRegister( userName, password ).then( function ( token ) {
+        return service.userRegister( userName, password ).then( function ( token ) {
             setUser( token );
             return token;
         });
     }
     
     return <div id="account">
-        { user ? <AccountDetail logout={ logout } user={ user } comfirmed={ comfirmed } />: <Forms login={ login } register={ register } /> }
+        { user ? <AccountDetail logout={ logout } user={ user }/>: <Forms login={ login } register={ register } /> }
     </div>;
 }
 
@@ -169,7 +167,7 @@ function AccountDetail ( props ) {
     </div>;
 }
 
-function AccountMenu ( props ) {
+function AccountMenu () {
     return <div className="account-menu">
         <Link to="/account">用戶資訊</Link>
         <Link to="/account/orders">訂單記錄</Link>

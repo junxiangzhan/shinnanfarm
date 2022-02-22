@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import Searchbar from "../components/searchbar";
-
-import store from "../store";
+import { store } from "../service";
 
 export default function ProductList () {
 
@@ -16,7 +15,7 @@ export default function ProductList () {
     return <div id="product-list">
         <Searchbar />
         <div className="product-list-container">
-            { productList ? <ProductListComponent productList={ productList } />: <div>Loading...</div> }
+            { productList ? productList.type ? "ERROR": <ProductListComponent productList={ productList } />: <div>Loading...</div> }
         </div>
     </div>
 }

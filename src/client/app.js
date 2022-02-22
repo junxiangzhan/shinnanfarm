@@ -3,20 +3,20 @@ import { useLocation, useRoutes } from "react-router-dom";
 
 import Navbar from "./components/navbar";
 import Footer from "./components/footer";
-import Cookie from "./cookie";
 import routes from "./routes";
+import { ServiceProvider } from "./service";
 
 export default function App ( props ) {
     const location = useLocation();
-    const cookie = props.cookies;
+    const service = props.cookies;
 
     useEffect( function () {
-        cookie.checkUser();
-    }, [])
-
-    return <Cookie.Provider value={ cookie }>
+        service.checkUser();
+    }, []);
+    
+    return <ServiceProvider cookies={ service }>
         <Navbar />
-        <div className="content-body">{ useRoutes( routes, location.pathname ) }</div>
+        <div className="content-body">{ useRoutes( routes, location ) }</div>
         <Footer />
-    </Cookie.Provider>;
+    </ServiceProvider>;
 }

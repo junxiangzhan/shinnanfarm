@@ -14,11 +14,7 @@ declare type QueryObject<queryString, values, callback> = {
 }
 
 declare class Connection<T = ConnectionConfigs> {
-
-    constructor ( configs: T );
-
     configs: T;
-
     query <T = string, R = any[], P = ( error: object | null , result: any, fields: any[]) => void>( queryString: T, values: any[], callback: P ): QueryObject<T, R, P>;
 }
 

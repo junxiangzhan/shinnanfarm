@@ -19,6 +19,7 @@ export default function login ( req, res, conn ) {
         if ( !results.length ) return res.send( false );
 
         const user = {
+            userId: results[0].id,
             userName: results[0].account,
             password: results[0].password,
             authority: results[0].authority

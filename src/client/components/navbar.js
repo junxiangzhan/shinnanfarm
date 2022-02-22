@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useCookie } from "../cookie";
+import { useService } from "../service";
 
 export default function Navbar () {
 
     const [ isCollapse, setCollapse ] = useState( true );
     const [ navbarCollapse, setNavbarCollapse ] = useState( null );
-    const cookie = useCookie();
+    const service = useService();
 
     const togglerProps = {
         className: [ 'navbar-toggler', !isCollapse && 'active' ].filter( Boolean ).join(" "),
@@ -27,15 +27,15 @@ export default function Navbar () {
         setCollapse( !isCollapse );
     }
 
-    const [ user, setUser ] = useState( cookie.getUser());
+    const [ user, setUser ] = useState( service.getUser());
 
     useEffect( function () {
-        const listener = cookie.addListener( 'user', function () {
-            setUser( cookie.getUser());
+        const listener = service.addListener( 'user', function () {
+            setUser( service.getUser());
         });
         
         return function () {
-            cookie.removeListener( 'user', listener );
+            service.removeListener( 'user', listener );
         };
     }, []);
 

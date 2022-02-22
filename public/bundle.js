@@ -2569,8 +2569,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/index.js");
 /* harmony import */ var _components_navbar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/navbar */ "./src/client/components/navbar.js");
 /* harmony import */ var _components_footer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/footer */ "./src/client/components/footer.js");
-/* harmony import */ var _cookie__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./cookie */ "./src/client/cookie/index.js");
-/* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./routes */ "./src/client/routes/index.js");
+/* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./routes */ "./src/client/routes/index.js");
+/* harmony import */ var _service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./service */ "./src/client/service/index.js");
 
 
 
@@ -2579,15 +2579,15 @@ __webpack_require__.r(__webpack_exports__);
 
 function App(props) {
   const location = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_5__.useLocation)();
-  const cookie = props.cookies;
+  const service = props.cookies;
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    cookie.checkUser();
+    service.checkUser();
   }, []);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_cookie__WEBPACK_IMPORTED_MODULE_3__["default"].Provider, {
-    value: cookie
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_service__WEBPACK_IMPORTED_MODULE_4__.ServiceProvider, {
+    cookies: service
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_navbar__WEBPACK_IMPORTED_MODULE_1__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "content-body"
-  }, (0,react_router_dom__WEBPACK_IMPORTED_MODULE_5__.useRoutes)(_routes__WEBPACK_IMPORTED_MODULE_4__["default"], location.pathname)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_footer__WEBPACK_IMPORTED_MODULE_2__["default"], null));
+  }, (0,react_router_dom__WEBPACK_IMPORTED_MODULE_5__.useRoutes)(_routes__WEBPACK_IMPORTED_MODULE_3__["default"], location)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_footer__WEBPACK_IMPORTED_MODULE_2__["default"], null));
 }
 
 /***/ }),
@@ -2754,15 +2754,52 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* binding */ Footer)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
+
 
 class Footer extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
   render() {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("footer", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       className: "container"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
       src: "/images/brand_white.svg",
       alt: "brand"
-    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      style: {
+        padding: "1rem"
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h4", null, "\u7DB2\u7AD9\u5C0E\u89BD"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("ul", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link, {
+      to: "/"
+    }, "\u9996\u9801 - Home")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link, {
+      to: "/news"
+    }, "\u6700\u65B0\u6D88\u606F - News")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link, {
+      to: "/market"
+    }, "\u7DDA\u4E0A\u5546\u5E97 - Market")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      style: {
+        padding: "1rem"
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h4", null, "\u5C08\u984C\u4ECB\u7D39"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("ul", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
+      href: "/AIweb",
+      target: "_blank"
+    }, "\u5C08\u984C\u4ECB\u7D39\u7DB2\u7AD9"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      style: {
+        padding: "1rem"
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h4", null, "\u76F8\u95DC\u8CC7\u8A0A"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("ul", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", null, "\u5730\u5740: 263\u5B9C\u862D\u7E23\u58EF\u570D\u9109\u65B0\u5357\u8DEF\u4E8C\u6BB515\u865F"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", null, "\u96FB\u8A71: ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
+      href: "tel:+88639254086"
+    }, "03 925 4086")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", null, "\u96FB\u5B50\u90F5\u4EF6: ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
+      href: "mailto:kotyosis588696@gmail.com"
+    }, "kotyosis588696@gmail.com")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      style: {
+        padding: "1rem"
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h4", null, "\u76F8\u95DC\u9023\u7D50"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("ul", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
+      href: "https://www.tanosecure.com.tw/"
+    }, "\u5929\u9F8D\u5B89\u5168\u79D1\u6280\u5B98\u5206\u7DB2\u7AD9")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
+      href: "https://www.facebook.com/ProfessorPlanted/"
+    }, "\u535A\u58EB\u7A2E\u7684 Facebook \u7C89\u7D72\u5C08\u9801")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
+      href: "https://www.facebook.com/\u65B0\u5357\u8FB2\u5712-1234272356657626/"
+    }, "\u65B0\u5357\u8FB2\u5712 Facebook \u7C89\u7D72\u5C08\u9801")))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       className: "copyright"
     }, "Copyright \xA9 2021, All rights reserved."));
   }
@@ -2784,14 +2821,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
-/* harmony import */ var _cookie__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../cookie */ "./src/client/cookie/index.js");
+/* harmony import */ var _service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../service */ "./src/client/service/index.js");
 
 
 
 function Navbar() {
   const [isCollapse, setCollapse] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true);
   const [navbarCollapse, setNavbarCollapse] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
-  const cookie = (0,_cookie__WEBPACK_IMPORTED_MODULE_1__.useCookie)();
+  const service = (0,_service__WEBPACK_IMPORTED_MODULE_1__.useService)();
   const togglerProps = {
     className: ['navbar-toggler', !isCollapse && 'active'].filter(Boolean).join(" "),
     role: 'button',
@@ -2810,13 +2847,13 @@ function Navbar() {
     setCollapse(!isCollapse);
   }
 
-  const [user, setUser] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(cookie.getUser());
+  const [user, setUser] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(service.getUser());
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    const listener = cookie.addListener('user', function () {
-      setUser(cookie.getUser());
+    const listener = service.addListener('user', function () {
+      setUser(service.getUser());
     });
     return function () {
-      cookie.removeListener('user', listener);
+      service.removeListener('user', listener);
     };
   }, []);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("nav", {
@@ -2907,212 +2944,6 @@ function Searchbar(props) {
 
 /***/ }),
 
-/***/ "./src/client/cookie/index.js":
-/*!************************************!*\
-  !*** ./src/client/cookie/index.js ***!
-  \************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
-/* harmony export */   "cookieHandler": () => (/* binding */ cookieHandler),
-/* harmony export */   "useCookie": () => (/* binding */ useCookie)
-/* harmony export */ });
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-
-const Cookie = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_1__.createContext)();
-
-function cookieHandler(cookie) {
-  const listeners = {};
-
-  function triggerEvent(...events) {
-    const cookies = cookie.loadAll();
-
-    for (let event of events) {
-      const eventListeners = listeners[event] ?? [];
-      let tmp = true;
-
-      for (let {
-        listener,
-        once
-      } of eventListeners) {
-        if (once) tmp = false;
-        listener(cookies);
-      }
-
-      ;
-      if (tmp) return;
-
-      for (let index = 0; index < eventListeners.length; index++) if (eventListeners[index].once) {
-        eventListeners.splice(index, 1);
-        index--;
-      }
-    }
-  }
-
-  return {
-    userLogin(userName, password) {
-      const reqBody = new FormData();
-      reqBody.append("userName", userName);
-      reqBody.append("password", password);
-      return new Promise(function (resolve, reject) {
-        axios__WEBPACK_IMPORTED_MODULE_0___default().request({
-          url: "/api/users/login",
-          method: "post",
-          data: {
-            userName,
-            password
-          }
-        }).then(function (res) {
-          const token = res.data;
-
-          if (token) {
-            cookie.save('userToken', token, {
-              path: '/'
-            });
-            return resolve(token);
-          }
-
-          ;
-          reject();
-        });
-      }).then(function (token) {
-        triggerEvent('user');
-        return token;
-      });
-    },
-
-    userLogout() {
-      cookie.remove("userToken", {
-        path: "/"
-      });
-      triggerEvent('user');
-    },
-
-    userRegister(userName, password) {
-      const reqBody = new FormData();
-      reqBody.append("userName", userName);
-      reqBody.append("password", password);
-      return new Promise(function (resolve, reject) {
-        axios__WEBPACK_IMPORTED_MODULE_0___default().request({
-          url: "/api/users/register",
-          method: "post",
-          data: {
-            userName,
-            password
-          }
-        }).then(function (res) {
-          const {
-            token
-          } = res.data;
-
-          if (token) {
-            cookie.save('userToken', token, {
-              path: '/'
-            });
-            return resolve(token);
-          }
-
-          ;
-          reject();
-        });
-      }).then(function (token) {
-        triggerEvent('user');
-        return token;
-      });
-    },
-
-    cartSet(productName, _count) {
-      const cart = cookie.load("userCart") ?? {};
-      const count = _count instanceof Function ? _count(cart[productName] ?? 0) : +_count;
-      cart[productName] = count;
-      if (!count) delete cart[productName];
-      cookie.save("userCart", cart, {
-        path: "/"
-      });
-      triggerEvent('cart');
-      return count;
-    },
-
-    cartClear() {
-      cookie.remove("userCart", {
-        path: "/"
-      });
-      triggerEvent('cart');
-    },
-
-    getUser() {
-      return cookie.load("userToken");
-    },
-
-    checkUser() {
-      return new Promise(function (resolve) {
-        const token = cookie.load("userToken");
-        if (!token) return resolve(false);
-        axios__WEBPACK_IMPORTED_MODULE_0___default().request({
-          url: "/api/users/details",
-          method: "post",
-          data: {
-            token
-          }
-        }).then(function ({
-          data: result
-        }) {
-          if (!result) {
-            cookie.remove("userToken", {
-              path: "/"
-            });
-            triggerEvent('user');
-          }
-
-          console.log('hi');
-          return result;
-        });
-      });
-    },
-
-    getCart() {
-      return cookie.load("userCart") ?? {};
-    },
-
-    addListener(event, listenerFunction, option) {
-      if (!listeners[event]) listeners[event] = [];
-      const listener = Object.assign({
-        listener: listenerFunction,
-        once: false
-      }, option);
-      listeners[event].push(listener);
-      return listener;
-    },
-
-    removeListener(event, listener) {
-      const eventListeners = listeners[event];
-
-      for (let index = 0; index < eventListeners.length; index++) if (eventListeners[index] == listener) {
-        eventListeners.splice(index, 1);
-        index--;
-      }
-    }
-
-  };
-}
-
-function useCookie() {
-  return (0,react__WEBPACK_IMPORTED_MODULE_1__.useContext)(Cookie);
-}
-
-Cookie.cookieHandler = cookieHandler;
-Cookie.useCookie = useCookie;
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Cookie);
-
-
-/***/ }),
-
 /***/ "./src/client/pages/account.js":
 /*!*************************************!*\
   !*** ./src/client/pages/account.js ***!
@@ -3126,41 +2957,39 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "useAccountInformation": () => (/* binding */ useAccountInformation)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
-/* harmony import */ var _cookie__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../cookie */ "./src/client/cookie/index.js");
-/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../store */ "./src/client/store/index.js");
-
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
+/* harmony import */ var _service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../service */ "./src/client/service/index.js");
 
 
 
 function Account() {
-  const cookie = (0,_cookie__WEBPACK_IMPORTED_MODULE_1__.useCookie)();
-  const [user, setUser] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(cookie.getUser());
+  const service = (0,_service__WEBPACK_IMPORTED_MODULE_1__.useService)();
+  const [user, setUser] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(service.getUser());
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    const listenter = cookie.addListener('user', function () {
-      const user = cookie.getUser();
+    const listenter = service.addListener('user', function () {
+      const user = service.getUser();
       setUser(user);
     });
     return function () {
-      cookie.removeListener('user', listenter);
+      service.removeListener('user', listenter);
     };
   }, []);
 
   function login(userName, password) {
-    return cookie.userLogin(userName, password).then(function (token) {
+    return service.userLogin(userName, password).then(function (token) {
       setUser(token);
       return token;
     });
   }
 
   function logout() {
-    cookie.userLogout();
+    service.userLogout();
     setUser(null);
   }
 
   function register(userName, password) {
-    return cookie.userRegister(userName, password).then(function (token) {
+    return service.userRegister(userName, password).then(function (token) {
       setUser(token);
       return token;
     });
@@ -3170,8 +2999,7 @@ function Account() {
     id: "account"
   }, user ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(AccountDetail, {
     logout: logout,
-    user: user,
-    comfirmed: comfirmed
+    user: user
   }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(Forms, {
     login: login,
     register: register
@@ -3321,9 +3149,9 @@ function AccountDetail(props) {
   const {
     user: userToken
   } = props;
-  const [user, setUserDetail] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(_store__WEBPACK_IMPORTED_MODULE_2__["default"].userDetail);
+  const [user, setUserDetail] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(_service__WEBPACK_IMPORTED_MODULE_1__.store.userDetail);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    if (!user) _store__WEBPACK_IMPORTED_MODULE_2__["default"].request('userDetail', userToken).then(setUserDetail);
+    if (!user) _service__WEBPACK_IMPORTED_MODULE_1__.store.request('userDetail', userToken).then(setUserDetail);
   }, []);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "navbar-space container account-layout",
@@ -3332,15 +3160,15 @@ function AccountDetail(props) {
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(AccountMenu, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(AccountInformation.Provider, {
     value: user
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Outlet, null)));
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Outlet, null)));
 }
 
-function AccountMenu(props) {
+function AccountMenu() {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "account-menu"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
     to: "/account"
-  }, "\u7528\u6236\u8CC7\u8A0A"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
+  }, "\u7528\u6236\u8CC7\u8A0A"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
     to: "/account/orders"
   }, "\u8A02\u55AE\u8A18\u9304"));
 }
@@ -3363,25 +3191,28 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* binding */ Cart)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _cookie__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../cookie */ "./src/client/cookie/index.js");
-/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../store */ "./src/client/store/index.js");
+/* harmony import */ var _service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../service */ "./src/client/service/index.js");
 
-
+ // 購物車的頁面
 
 function Cart() {
-  const cookieService = (0,_cookie__WEBPACK_IMPORTED_MODULE_1__.useCookie)();
-  const [cart, setCart] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(cookieService.getCart());
-  const [products, setProductList] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(_store__WEBPACK_IMPORTED_MODULE_2__["default"].productList ?? []);
+  const service = (0,_service__WEBPACK_IMPORTED_MODULE_1__.useService)(); // 使用 useState Hook 建立 cart、products State
+
+  const [cart, setCart] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(service.getCart());
+  const [products, setProductList] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(_service__WEBPACK_IMPORTED_MODULE_1__.store.productList ?? []);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    const listener = cookieService.addListener("cart", function () {
-      setCart(cookieService.getCart());
-    });
+    // 監聽購物車，若有任何變動，則更新 cart State 內容
+    const listener = service.addListener("cart", function () {
+      return setCart(service.getCart());
+    }); // 當組件將要卸載，註消監聽器
+
     return function () {
-      cookieService.removeListener("cart", listener);
+      return service.removeListener("cart", listener);
     };
-  }, []);
+  }, []); // 若沒有取得商品清單，則嘗試取得，並將結果儲存至 products State
+
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    if (!products) _store__WEBPACK_IMPORTED_MODULE_2__["default"].request('productList').then(setProductList);
+    if (!products) _service__WEBPACK_IMPORTED_MODULE_1__.store.request('productList').then(setProductList);
   }, []);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     id: "cart-page"
@@ -3390,14 +3221,15 @@ function Cart() {
     style: {
       maxWidth: "var(--max-width-container-xl)"
     }
-  }, Object.entries(cart).length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(CartComponent, {
+  }, // 若購物車中有任何商品，則在商品清單載入後顯示頁面內容
+  Object.entries(cart).length ? products ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(CartComponent, {
     cart: cart,
     productList: products
-  }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(CartEmpty, null)));
+  }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(Loading, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(CartEmpty, null)));
 }
 
 Cart.getInitialData = function () {
-  return _store__WEBPACK_IMPORTED_MODULE_2__["default"].request('productList');
+  return _service__WEBPACK_IMPORTED_MODULE_1__.store.request('productList');
 };
 
 function CartComponent(props) {
@@ -3411,6 +3243,63 @@ function CartComponent(props) {
   }) {
     return [name, rest];
   }));
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "cart-layout"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(CartList, {
+    cart,
+    products
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(CartSummary, {
+    cart,
+    products
+  }));
+}
+
+function CartList(props) {
+  const {
+    cart,
+    products
+  } = props;
+
+  function renderCartItems(cart, products) {
+    return Boolean(products) && Object.entries(cart).sort().map(function ([name, count]) {
+      const {
+        price,
+        images
+      } = products[name] ?? {};
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "product-row",
+        key: name
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
+        className: "product-image",
+        src: `/api/files/${images?.[0] ?? "default_product.svg"}`
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "product-name"
+      }, name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "product-price"
+      }, price), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "product-count"
+      }, count), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "product-price"
+      }, count * price));
+    });
+  }
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "cart-list"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "product-row product-title-row"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "\u5546\u54C1\u5716\u7247"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "\u5546\u54C1\u540D\u7A31"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "\u50F9\u683C"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "\u6578\u91CF"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "\u5C0F\u8A08")), renderCartItems(cart, products));
+}
+
+function Loading() {
+  return "Loading...";
+}
+
+function CartSummary(props) {
+  const {
+    cart,
+    products
+  } = props;
   const [selectElement, setSelectElement] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
 
   function count() {
@@ -3430,10 +3319,6 @@ function CartComponent(props) {
   }
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-    className: "cart-layout"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-    className: "cart-list"
-  }, renderCartItems(cart, products)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "cart-summary"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "summary-header"
@@ -3486,33 +3371,7 @@ function CartComponent(props) {
     className: "summary-clear"
   }, "\u6E05\u7A7A\u8CFC\u7269\u8ECA"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     className: "summary-checkout"
-  }, "\u9001\u51FA\u8A02\u55AE")))));
-}
-
-function renderCartItems(cart, products) {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-    className: "product-row product-title-row"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "\u5546\u54C1\u5716\u7247"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "\u5546\u54C1\u540D\u7A31"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "\u50F9\u683C"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "\u6578\u91CF"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "\u5C0F\u8A08")), Boolean(products) && Object.entries(cart).sort().map(function ([name, count]) {
-    const {
-      price,
-      images
-    } = products[name] ?? {};
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-      className: "product-row",
-      key: name
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
-      className: "product-image",
-      src: `/api/files/${images?.[0] ?? "default_product.svg"}`
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-      className: "product-name"
-    }, name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-      className: "product-price"
-    }, price), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-      className: "product-count"
-    }, count), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-      className: "product-price"
-    }, count * price));
-  }));
+  }, "\u9001\u51FA\u8A02\u55AE"))));
 }
 
 function CartEmpty(props) {
@@ -3654,14 +3513,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* binding */ GoodDetailPage)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
 /* harmony import */ var remarkable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! remarkable */ "./node_modules/remarkable/dist/esm/index.js");
 /* harmony import */ var _components_breadcrumb__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/breadcrumb */ "./src/client/components/breadcrumb.js");
 /* harmony import */ var _components_carousel__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/carousel */ "./src/client/components/carousel.js");
-/* harmony import */ var _cookie__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../cookie */ "./src/client/cookie/index.js");
-/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../store */ "./src/client/store/index.js");
-
+/* harmony import */ var _service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../service */ "./src/client/service/index.js");
 
 
 
@@ -3671,14 +3528,15 @@ __webpack_require__.r(__webpack_exports__);
 function GoodDetailPage() {
   const {
     name
-  } = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_6__.useParams)();
-  const [data, setData] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(_store__WEBPACK_IMPORTED_MODULE_5__["default"].productDetail);
+  } = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_5__.useParams)();
+  const [data, setData] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(_service__WEBPACK_IMPORTED_MODULE_4__.store[`product-${name}`]);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function componentDidUpdate() {
-    if (data?.name != name) _store__WEBPACK_IMPORTED_MODULE_5__["default"].request('productDetail', name).then(setData);
+    if (data?.name != name) _service__WEBPACK_IMPORTED_MODULE_4__.store.request('productDetail', `product-${name}`, name).then(setData);
   }, []);
+  console.log(data);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     id: "good-detail"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_breadcrumb__WEBPACK_IMPORTED_MODULE_2__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__.Link, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_breadcrumb__WEBPACK_IMPORTED_MODULE_2__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Link, {
     to: "/market"
   }, "\u7DDA\u4E0A\u5546\u5E97"), name), data?.name == name ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(GoodDetail, {
     data: data
@@ -3688,26 +3546,26 @@ function GoodDetailPage() {
 function GoodDetail({
   data
 }) {
-  const cookieService = (0,_cookie__WEBPACK_IMPORTED_MODULE_4__.useCookie)();
-  const [cart, setCart] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(cookieService.getCart());
+  const service = (0,_service__WEBPACK_IMPORTED_MODULE_4__.useService)();
+  const [cart, setCart] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(service.getCart());
   const [numberInput, setNumberInputElement] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
   const [cartCount, setCartCount] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(cart[data.name]);
   let [count, setCount] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(cartCount ?? 1);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    const cartListener = cookieService.addListener('cart', function () {
-      const cart = cookieService.getCart();
+    const cartListener = service.addListener('cart', function () {
+      const cart = service.getCart();
       setCart(cart);
       setCartCount(cart[data.name]);
     });
     return function () {
-      cookieService.removeListener('cart', cartListener);
+      service.removeListener('cart', cartListener);
     };
   }, []);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     if (numberInput) numberInput.value = cartCount ?? count;
   }, [numberInput]);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    cookieService.cartSet(data.name, cartCount && count);
+    service.cartSet(data.name, cartCount && count);
   }, [count]);
 
   function increase() {
@@ -3730,7 +3588,7 @@ function GoodDetail({
 
   function cartToggler() {
     const count = numberInput.value;
-    cookieService.cartSet(data.name, cartCount ? 0 : count);
+    service.cartSet(data.name, cartCount ? 0 : count);
   }
 
   const md = new remarkable__WEBPACK_IMPORTED_MODULE_1__.Remarkable();
@@ -3798,7 +3656,7 @@ function GoodDetail({
 GoodDetailPage.getInitialData = async function ({
   name
 }) {
-  return _store__WEBPACK_IMPORTED_MODULE_5__["default"].request('productDetail', name);
+  return _service__WEBPACK_IMPORTED_MODULE_4__.store.request('productDetail', `product-${name}`, name);
 };
 
 /***/ }),
@@ -3817,27 +3675,27 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
 /* harmony import */ var _components_searchbar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/searchbar */ "./src/client/components/searchbar.js");
-/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../store */ "./src/client/store/index.js");
+/* harmony import */ var _service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../service */ "./src/client/service/index.js");
 
 
 
 
 function ProductList() {
-  const [productList, setProductList] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(_store__WEBPACK_IMPORTED_MODULE_2__["default"].productList);
+  const [productList, setProductList] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(_service__WEBPACK_IMPORTED_MODULE_2__.store.productList);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function componentDidMount() {
-    if (!productList) _store__WEBPACK_IMPORTED_MODULE_2__["default"].request('productList').then(setProductList);
+    if (!productList) _service__WEBPACK_IMPORTED_MODULE_2__.store.request('productList').then(setProductList);
   }, []);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     id: "product-list"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_searchbar__WEBPACK_IMPORTED_MODULE_1__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "product-list-container"
-  }, productList ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ProductListComponent, {
+  }, productList ? productList.type ? "ERROR" : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ProductListComponent, {
     productList: productList
   }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "Loading...")));
 }
 
 ProductList.getInitialData = function () {
-  return _store__WEBPACK_IMPORTED_MODULE_2__["default"].request('productList');
+  return _service__WEBPACK_IMPORTED_MODULE_2__.store.request('productList');
 };
 
 function ProductListComponent(props) {
@@ -3885,7 +3743,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* binding */ UserDetail)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _cookie__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../cookie */ "./src/client/cookie/index.js");
+/* harmony import */ var _service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../service */ "./src/client/service/index.js");
 /* harmony import */ var _account__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./account */ "./src/client/pages/account.js");
 
 
@@ -3898,7 +3756,7 @@ function UserDetail() {
 }
 
 function AccountInfoForm() {
-  const cookie = (0,_cookie__WEBPACK_IMPORTED_MODULE_1__.useCookie)();
+  const service = (0,_service__WEBPACK_IMPORTED_MODULE_1__.useService)();
   const user = (0,_account__WEBPACK_IMPORTED_MODULE_2__.useAccountInformation)() ?? {};
   const [isLoading, setLoadingState] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const [userNameInput, setUserNameInputElement] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)();
@@ -3923,7 +3781,7 @@ function AccountInfoForm() {
     ;
     if (error) return setInputError(error);
     return;
-    cookie.register(userNameElement.value, passwordElement.value).catch(function () {
+    service.register(userNameElement.value, passwordElement.value).catch(function () {
       setInputError(1);
       setLoadingState(false);
     });
@@ -4113,21 +3971,214 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./src/client/store/index.js":
-/*!***********************************!*\
-  !*** ./src/client/store/index.js ***!
-  \***********************************/
+/***/ "./src/client/service/index.js":
+/*!*************************************!*\
+  !*** ./src/client/service/index.js ***!
+  \*************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */   "useService": () => (/* binding */ useService),
+/* harmony export */   "ServiceProvider": () => (/* binding */ ServiceProvider),
+/* harmony export */   "cookieHandler": () => (/* binding */ cookieHandler),
+/* harmony export */   "store": () => (/* binding */ store)
 /* harmony export */ });
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 
 
+const ServiceContext = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createContext(null);
+ServiceContext.displayName = "Service";
+function useService() {
+  return react__WEBPACK_IMPORTED_MODULE_0__.useContext(ServiceContext);
+}
+function ServiceProvider(props) {
+  const {
+    cookies,
+    children
+  } = props;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ServiceContext.Provider, {
+    value: cookies
+  }, children);
+}
+function cookieHandler(cookie) {
+  const listeners = {};
+
+  function triggerEvent(...events) {
+    const cookies = cookie.loadAll();
+
+    for (let event of events) {
+      const eventListeners = listeners[event] ?? [];
+      let tmp = true;
+
+      for (let {
+        listener,
+        once
+      } of eventListeners) {
+        if (once) tmp = false;
+        listener(cookies);
+      }
+
+      ;
+      if (tmp) return;
+
+      for (let index = 0; index < eventListeners.length; index++) if (eventListeners[index].once) {
+        eventListeners.splice(index, 1);
+        index--;
+      }
+    }
+  }
+
+  return {
+    userLogin(userName, password) {
+      const reqBody = new FormData();
+      reqBody.append("userName", userName);
+      reqBody.append("password", password);
+      return new Promise(function (resolve, reject) {
+        axios__WEBPACK_IMPORTED_MODULE_1___default().request({
+          url: "/api/users/login",
+          method: "post",
+          data: {
+            userName,
+            password
+          }
+        }).then(function (res) {
+          const token = res.data;
+
+          if (token) {
+            cookie.save('userToken', token, {
+              path: '/'
+            });
+            return resolve(token);
+          }
+
+          ;
+          reject();
+        });
+      }).then(function (token) {
+        triggerEvent('user');
+        return token;
+      });
+    },
+
+    userLogout() {
+      cookie.remove("userToken", {
+        path: "/"
+      });
+      triggerEvent('user');
+    },
+
+    userRegister(userName, password) {
+      const reqBody = new FormData();
+      reqBody.append("userName", userName);
+      reqBody.append("password", password);
+      return new Promise(function (resolve, reject) {
+        axios__WEBPACK_IMPORTED_MODULE_1___default().request({
+          url: "/api/users/register",
+          method: "post",
+          data: {
+            userName,
+            password
+          }
+        }).then(function (res) {
+          const {
+            token
+          } = res.data;
+
+          if (token) {
+            cookie.save('userToken', token, {
+              path: '/'
+            });
+            return resolve(token);
+          }
+
+          ;
+          reject();
+        });
+      }).then(function (token) {
+        triggerEvent('user');
+        return token;
+      });
+    },
+
+    cartSet(productName, _count) {
+      const cart = cookie.load("userCart") ?? {};
+      const count = _count instanceof Function ? _count(cart[productName] ?? 0) : +_count;
+      cart[productName] = count;
+      if (!count) delete cart[productName];
+      cookie.save("userCart", cart, {
+        path: "/"
+      });
+      triggerEvent('cart');
+      return count;
+    },
+
+    cartClear() {
+      cookie.remove("userCart", {
+        path: "/"
+      });
+      triggerEvent('cart');
+    },
+
+    getUser() {
+      return cookie.load("userToken");
+    },
+
+    checkUser() {
+      return new Promise(function (resolve) {
+        const token = cookie.load("userToken");
+        if (!token) return resolve(false);
+        axios__WEBPACK_IMPORTED_MODULE_1___default().request({
+          url: "/api/users/details",
+          method: "post",
+          data: {
+            token
+          }
+        }).then(function ({
+          data: result
+        }) {
+          if (!result) {
+            cookie.remove("userToken", {
+              path: "/"
+            });
+            triggerEvent('user');
+          }
+
+          console.log('hi');
+          return result;
+        });
+      });
+    },
+
+    getCart() {
+      return cookie.load("userCart") ?? {};
+    },
+
+    addListener(event, listenerFunction, option) {
+      if (!listeners[event]) listeners[event] = [];
+      const listener = Object.assign({
+        listener: listenerFunction,
+        once: false
+      }, option);
+      listeners[event].push(listener);
+      return listener;
+    },
+
+    removeListener(event, listener) {
+      const eventListeners = listeners[event];
+
+      for (let index = 0; index < eventListeners.length; index++) if (eventListeners[index] == listener) {
+        eventListeners.splice(index, 1);
+        index--;
+      }
+    }
+
+  };
+}
+;
 const store = function () {
   const configs = {
     productList: {
@@ -4155,28 +4206,19 @@ const store = function () {
 
   };
   const store = {
-    async request(name, ...arg) {
+    async request(name, key, ...arg) {
       const config = configs[name] instanceof Function ? configs[name](...arg) : configs[name];
-      return await axios__WEBPACK_IMPORTED_MODULE_0___default().request(config).then(function (response) {
+      return await axios__WEBPACK_IMPORTED_MODULE_1___default().request(config).then(function (response) {
         Object.assign(store, {
-          [name]: response.data
+          [key || name]: response.data
         });
         return response.data;
       }.bind(this));
-    },
-
-    init() {
-      return Object.entries(configs).map(function ([name]) {
-        return store[name] = null;
-      });
     }
 
   };
-  store.init();
   return store;
 }();
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (store);
 
 /***/ }),
 
@@ -45179,12 +45221,14 @@ var __webpack_exports__ = {};
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
-/* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./routes */ "./src/client/routes/index.js");
-/* harmony import */ var _app__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./app */ "./src/client/app.js");
-/* harmony import */ var react_cookies__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-cookies */ "./node_modules/react-cookies/build/cookie.js");
-/* harmony import */ var _cookie__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./cookie */ "./src/client/cookie/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./routes */ "./src/client/routes/index.js");
+/* harmony import */ var _app__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./app */ "./src/client/app.js");
+/* harmony import */ var react_cookies__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-cookies */ "./node_modules/react-cookies/build/cookie.js");
+/* harmony import */ var _service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./service */ "./src/client/service/index.js");
 
 
 
@@ -45192,7 +45236,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-Promise.all((0,react_router_dom__WEBPACK_IMPORTED_MODULE_6__.matchRoutes)(_routes__WEBPACK_IMPORTED_MODULE_2__["default"], location.pathname).map(function ({
+
+(axios__WEBPACK_IMPORTED_MODULE_2___default().defaults.baseURL) = location.origin;
+Promise.all((0,react_router_dom__WEBPACK_IMPORTED_MODULE_7__.matchRoutes)(_routes__WEBPACK_IMPORTED_MODULE_3__["default"], location.pathname).map(function ({
   params,
   route: {
     element
@@ -45200,8 +45246,8 @@ Promise.all((0,react_router_dom__WEBPACK_IMPORTED_MODULE_6__.matchRoutes)(_route
 }) {
   return element?.type.getInitialData && element.type.getInitialData(params);
 })).then(function () {
-  react_dom__WEBPACK_IMPORTED_MODULE_1__.hydrate( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.StrictMode, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__.BrowserRouter, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_app__WEBPACK_IMPORTED_MODULE_3__["default"], {
-    cookies: (0,_cookie__WEBPACK_IMPORTED_MODULE_5__.cookieHandler)(react_cookies__WEBPACK_IMPORTED_MODULE_4__["default"])
+  react_dom__WEBPACK_IMPORTED_MODULE_1__.hydrate( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.StrictMode, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.BrowserRouter, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_app__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    cookies: (0,_service__WEBPACK_IMPORTED_MODULE_6__.cookieHandler)(react_cookies__WEBPACK_IMPORTED_MODULE_5__["default"])
   }))), document.querySelector('[data-reactroot]'));
 });
 })();

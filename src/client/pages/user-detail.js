@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useCookie } from '../cookie';
+import { useService } from '../service';
 import { useAccountInformation } from './account';
 
 export default function UserDetail () {
@@ -17,7 +17,7 @@ export default function UserDetail () {
 }
 
 function AccountInfoForm () {
-    const cookie = useCookie();
+    const service = useService();
     const user = useAccountInformation() ?? {};
 
     const [ isLoading, setLoadingState ] = useState( false );
@@ -44,7 +44,7 @@ function AccountInfoForm () {
 
         return ;
 
-        cookie.register( userNameElement.value, passwordElement.value ).catch( function () {
+        service.register( userNameElement.value, passwordElement.value ).catch( function () {
             setInputError(1);
             setLoadingState( false );
         });
