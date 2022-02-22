@@ -15,12 +15,6 @@ export default class Footer extends React.Component {
                             <li><Link to="/market">線上商店 - Market</Link></li>
                         </ul>
                     </div>
-                    <div style={{ padding: "1rem"}}>
-                        <h4>專題介紹</h4>
-                        <ul>
-                            <li><a href="/AIweb" target="_blank">專題介紹網站</a></li>
-                        </ul>
-                    </div>
                 </div>
                 <div>
                     <div style={{ padding: "1rem"}}>
@@ -32,11 +26,9 @@ export default class Footer extends React.Component {
                         </ul>
                     </div>
                     <div style={{ padding: "1rem"}}>
-                        <h4>相關連結</h4>
+                        <h4>專題介紹</h4>
                         <ul>
-                            <li><a href="https://www.tanosecure.com.tw/">天龍安全科技官分網站</a></li>
-                            <li><a href="https://www.facebook.com/ProfessorPlanted/">博士種的 Facebook 粉絲專頁</a></li>
-                            <li><a href="https://www.facebook.com/新南農園-1234272356657626/">新南農園 Facebook 粉絲專頁</a></li>
+                            <li><a href="/AIweb" target="_blank">專題介紹網站</a></li>
                         </ul>
                     </div>
                 </div>
