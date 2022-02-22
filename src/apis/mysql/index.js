@@ -67,7 +67,7 @@ class Connection {
             const { results: datarows, fields } = result;
             const results = [];
             
-            for ( let row of datarows ) {
+            for ( let row of datarows || [] ) {
                 const result = {};
 
                 for ( let field of fields )  {        
@@ -88,6 +88,7 @@ class Connection {
             return result;
 
         }).catch( function ( error ) {
+            console.log(error)
             if ( callback instanceof Function ) callback( error );
             if ( error?.isFatal ) OnFatalErrorHappen();
         });

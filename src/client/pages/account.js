@@ -156,8 +156,10 @@ function AccountDetail ( props ) {
     const [ user, setUserDetail ] = useState( store.userDetail );
 
     useEffect( function () {
-        if ( !user ) store.request( 'userDetail', userToken ).then( setUserDetail );
+        if ( !user ) store.request( 'userDetail', 'userDetail', userToken ).then( setUserDetail );
     }, []);
+
+    console.log( user )
 
     return <div className="navbar-space container account-layout" style={{ maxWidth: "var(--max-width-container-xl)" }}>
         <AccountMenu />

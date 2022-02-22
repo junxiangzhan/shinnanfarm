@@ -3151,8 +3151,9 @@ function AccountDetail(props) {
   } = props;
   const [user, setUserDetail] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(_service__WEBPACK_IMPORTED_MODULE_1__.store.userDetail);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    if (!user) _service__WEBPACK_IMPORTED_MODULE_1__.store.request('userDetail', userToken).then(setUserDetail);
+    if (!user) _service__WEBPACK_IMPORTED_MODULE_1__.store.request('userDetail', 'userDetail', userToken).then(setUserDetail);
   }, []);
+  console.log(user);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "navbar-space container account-layout",
     style: {

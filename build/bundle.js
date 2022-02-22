@@ -449,7 +449,7 @@ class Connection {
       } = result;
       const results = [];
 
-      for (let row of datarows) {
+      for (let row of datarows || []) {
         const result = {};
 
         for (let field of fields) {
@@ -472,6 +472,7 @@ class Connection {
       if (callback instanceof Function) callback(null, results, fields);
       return result;
     }).catch(function (error) {
+      console.log(error);
       if (callback instanceof Function) callback(error);
       if (error?.isFatal) OnFatalErrorHappen();
     });
@@ -1429,8 +1430,9 @@ function AccountDetail(props) {
   } = props;
   const [user, setUserDetail] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(_service__WEBPACK_IMPORTED_MODULE_2__.store.userDetail);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    if (!user) _service__WEBPACK_IMPORTED_MODULE_2__.store.request('userDetail', userToken).then(setUserDetail);
+    if (!user) _service__WEBPACK_IMPORTED_MODULE_2__.store.request('userDetail', 'userDetail', userToken).then(setUserDetail);
   }, []);
+  console.log(user);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "navbar-space container account-layout",
     style: {
