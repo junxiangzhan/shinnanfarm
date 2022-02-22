@@ -7,12 +7,13 @@
   "scripts": {
     "dev": "npm-run-all -p dev:run dev:build:*",
     "dev:run": "nodemon --inspect build/bundle.js",
-    "dev:build:client": "webpack -c webpack.client.js -w",
-    "dev:build:server": "webpack -c webpack.server.js -w",
+    "dev:build:client": "webpack -c webpack.config.js --env mode=client -w",
+    "dev:build:server": "webpack -c webpack.config.js --env mode=server -w",
+    
     "start": "node build/bundle.js",
-    "heroku-postbuild": "npm-run-all -p dev:build:heroku:*",
-    "dev:build:heroku:client": "webpack -c webpack.client.js",
-    "dev:build:heroku:server": "webpack -c webpack.server.js"
+    "heroku-postbuild": "npm-run-all -p heroku-postbuild:*",
+    "heroku-postbuild:client": "webpack -c webpack.config.js --env mode=client",
+    "heroku-postbuild:server": "webpack -c webpack.config.js --env mode=server"
   },
   "dependencies": {
     "axios": "^0.25.0",
@@ -39,6 +40,6 @@
     "webpack-node-externals": "^3.0.0"
   },
   "engines": {
-    "node": "16.x"
+    "node": "17.x"
   }
 }
