@@ -4,17 +4,17 @@ import { Remarkable } from "remarkable";
 
 import Breadcrumb from "../components/breadcrumb";
 import Carousel from "../components/carousel";
-import { useCookie } from "../cookie";
-
-import store from "../store";
+import { store, useService } from "../service";
 
 export default function GoodDetailPage () {
     const { name } = useParams();
-    const [ data, setData ] = useState( store.productDetail );
+    const [ data, setData ] = useState( store[`product-${name}`] );
 
     useEffect( function componentDidUpdate() {
-        if ( data?.name != name ) store.request( 'productDetail', name ).then( setData );
+        if ( data?.name != name ) store.request( 'productDetail', `product-${name}`, name ).then( setData );
     }, []);
+
+    console.log( data )
 
     return <div id="good-detail">
         <Breadcrumb>
@@ -27,8 +27,8 @@ export default function GoodDetailPage () {
 
 function GoodDetail ({ data }) {
 
-    const cookieService = useCookie();
-    const [ cart, setCart ] = useState( cookieService.getCart());
+    const service = useService();
+    const [ cart, setCart ] = useState( service.getCart());
 
     const [ numberInput, setNumberInputElement ] = useState( null );
     
@@ -37,14 +37,14 @@ function GoodDetail ({ data }) {
 
     useEffect( function () {
 
-        const cartListener = cookieService.addListener( 'cart', function () {
-            const cart = cookieService.getCart();
+        const cartListener = service.addListener( 'cart', function () {
+            const cart = service.getCart();
             setCart( cart );
             setCartCount( cart[ data.name ]);
         });
 
         return function () {
-            cookieService.removeListener( 'cart', cartListener );
+            service.removeListener( 'cart', cartListener );
         };
     }, []);
 
@@ -53,7 +53,7 @@ function GoodDetail ({ data }) {
     }, [ numberInput ]);
 
     useEffect( function () {
-        cookieService.cartSet( data.name, cartCount && count );
+        service.cartSet( data.name, cartCount && count );
     }, [ count ]);
 
     function increase () {
@@ -76,7 +76,7 @@ function GoodDetail ({ data }) {
 
     function cartToggler () {
         const count = numberInput.value;
-        cookieService.cartSet( data.name, cartCount ? 0: count );
+        service.cartSet( data.name, cartCount ? 0: count );
     }
 
     const md = new Remarkable();
@@ -119,5 +119,5 @@ function GoodDetail ({ data }) {
 }
 
 GoodDetailPage.getInitialData = async function ({ name }) {
-    return store.request( 'productDetail', name );
+    return store.request( 'productDetail', `product-${name}`, name );
 }

@@ -6,7 +6,7 @@ export default function get ( req, res, conn ) {
         message: 'The parameter \'name\' must be given.'
     });
 
-    return conn.query('SELECT `files`.*, `file_data`.`data_id`, `file_data`.`data` FROM `files`, `file_data` WHERE `id` = `file_id` AND `name` = ?;', [ name ], function ( err, results ) {
+    return conn.query('SELECT `files`.*, `file_data`.`data_id`, `file_data`.`data` FROM `files` JOIN `file_data` ON `id` = `file_id` WHERE `name` = ?;', [ name ], function ( err, results ) {
 
         if ( err ) return res.send({
             type: 'error',

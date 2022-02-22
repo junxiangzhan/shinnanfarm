@@ -883,23 +883,30 @@ body {
 
 footer {
     background-color: var(--shared-green10);
+    color: var(--white);
 
     .container {
+        width: fit-content;
+        max-width: var(--width-container);
         display: flex;
         flex-direction: column;
-        align-items: center;
 
         @media ( min-width: 768px ) {
             flex-direction: row;
             align-items: flex-start;
+            gap: 3rem;
         }
     }
 
     img {
         max-width: calc( 100vw - 2rem );
-        width: 300px;
-        padding: 2rem 0;
-        opacity: .8;
+        width: 250px;
+        padding: 1rem 0;
+        align-self: center;
+
+        @media ( min-width: 768px ) {
+            align-self: unset;
+        }
     }
 
     .copyright {
@@ -907,6 +914,27 @@ footer {
         padding: .51rem;
         text-align: center;
         background: #0005;
+    }
+
+    h4 {
+        font-weight: 500;
+        border-left: .25em solid var(--white);
+        padding-left: .25em;
+        margin: 0 0 .25em;
+    }
+
+    ul {
+        margin: 0;
+        padding-left: 1rem;
+
+        a {
+            color: var(--white);
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
     }
 }
 

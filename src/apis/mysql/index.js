@@ -1,19 +1,15 @@
 import axios from "axios";
 
 const types = {
-    VAR_STRING: String,
-    STRING: String,
-    TINY: Number,
-    SHORT: Number,
-    LONG: Number,
-    LONGLONG: Number,
-    INT24: Number,
-    DOUBLE: Number,
-    DATETIME: Date,
-    DATE: Date,
-    TIMESTAMP: Date,
-    BLOB: Buffer.from
-}
+    [[ "VAR_STRING", "STRING" ]]: String,
+    [[ "TINY", "SHORT", "LONG", "LONGLONG", "INT24", "DOUBLE" ]]: Number,
+    [[ "DATETIME", "DATE", "TIMESTAMP" ]]: Date,
+    [[ "BLOB" ]]: Buffer.from
+};
+
+const errorCodes = {
+
+};
 
 class Connection {
 
@@ -44,9 +40,9 @@ class Connection {
             callback
         };
         
-        function OnFatalErrorHappen () {
+        const OnFatalErrorHappen = function () {
             this.#afterFatalError = true;
-        }
+        }.bind( this );
 
         const promise = new Promise( function ( resolve, reject ) {
 
@@ -58,9 +54,12 @@ class Connection {
                     query: JSON.stringify({ queryString, values })
                 }
             }).then( function ({ data: result }) {
-                return result.error ? reject( result ): resolve( result );
+                return result.error ? reject( result.error ): resolve( result );
             }).catch( function ( reason ) {
-                return console.log( reason );
+                return reject( {
+                    errorInfo: reason,
+                    isFatal: true
+                });
             });
 
         }).then( function ( result ) {
@@ -73,7 +72,13 @@ class Connection {
 
                 for ( let field of fields )  {        
                     const { name, native_type } = field;
-                    result[ name ] = types[ native_type ]( row[ name ]);
+
+                    for ( let [ nativeTypes, method ] of Object.entries( types )) {
+                        if ( nativeTypes.includes( native_type ) ) {
+                            result[ name ] = method( row[name] );
+                            break;
+                        }
+                    }
                 }
 
                 results.push( result );
@@ -82,8 +87,7 @@ class Connection {
             if ( callback instanceof Function ) callback( null, results, fields );
             return result;
 
-        }).catch( function ( result ) {
-            const { error } = result;
+        }).catch( function ( error ) {
             if ( callback instanceof Function ) callback( error );
             if ( error?.isFatal ) OnFatalErrorHappen();
         });
