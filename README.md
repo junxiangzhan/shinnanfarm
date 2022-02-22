@@ -1,6 +1,6 @@
 # 新南智慧農場
 
-本作品可於 [https://github.com/junxiangzhan/shinnanfarm](https://github.com/junxiangzhan/shinnanfarm) 下載，不包含 XAMPP 及 Node.js 之安裝執行檔。
+本作品可於 [https://github.com/junxiangzhan/shinnanfarm](https://github.com/junxiangzhan/shinnanfarm) 下載及觀看線上說明（[`README.md`](README.md)），不包含 XAMPP 及 Node.js 之安裝執行檔。
 
 本作品使用 React、Express、Axios、MySQL 以及 Remarkable 模組製作。
 
