@@ -140,7 +140,6 @@ export function cookieHandler ( cookie ) {
                         cookie.remove( "userToken", { path: "/" });
                         triggerEvent( 'user' );
                     }
-                    console.log('hi')
                     return result;
                 });
             });

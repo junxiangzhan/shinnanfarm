@@ -10,7 +10,7 @@
 
 ### 1. Node.js 環境設置
 
-1. 開啟 [`node-v17.5.0-x64.msi`](node-v17.5.0-x64.msi) 執行檔。
+1. 開啟 Node.js 安裝執行檔。
 
 2. 在 End-User License Agreement 頁面，在詳細閱讀 **終端使用者授權合約** 後，勾選 **I accept the terms in the License Agreement**。
 
@@ -20,7 +20,7 @@
 
 ### 2. Apache、MySQL 伺服器安裝及資料庫設定
 
-1. 開啟 [`xampp-windows-x64-8.0.3-0-VS16-installer.exe`](xampp-windows-x64-8.0.3-0-VS16-installer.exe) 執行檔。
+1. 開啟 XAMPP 安裝執行檔。
 
 2. 在 Select Components 頁面中：Server 項選取 Apache（預設）以及 MySQL；Program Languages 項選取 PHP（預設）以及 phpMyAdmin。
 

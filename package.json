@@ -12,8 +12,8 @@
     
     "start": "node build/bundle.js",
     "build": "npm-run-all -p build:*",
-    "build:client": "webpack -c webpack.config.js --env mode=client --node-env production -w",
-    "build:server": "webpack -c webpack.config.js --env mode=server --node-env production -w"
+    "build:client": "webpack -c webpack.config.js --env mode=client --node-env production",
+    "build:server": "webpack -c webpack.config.js --env mode=server --node-env production"
   },
   "dependencies": {
     "axios": "^0.25.0",

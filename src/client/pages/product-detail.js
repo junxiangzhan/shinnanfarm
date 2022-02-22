@@ -14,8 +14,6 @@ export default function GoodDetailPage () {
         if ( data?.name != name ) store.request( 'productDetail', `product-${name}`, name ).then( setData );
     }, []);
 
-    console.log( data )
-
     return <div id="good-detail">
         <Breadcrumb>
             <Link to="/market">線上商店</Link>
