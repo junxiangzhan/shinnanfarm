@@ -105,3 +105,8 @@ dist
 
 # VScode workspace settings
 .vscode/
+
+# Others
+
+*.exe
+*.msi

@@ -26,28 +26,6 @@ USE `shinnanfarm`;
 -- --------------------------------------------------------
 
 --
--- 資料表結構 `annotation`
---
-
-DROP TABLE IF EXISTS `annotation`;
-CREATE TABLE `annotation` (
-  `table` varchar(200) NOT NULL COMMENT '資料表',
-  `column` varchar(200) NOT NULL COMMENT '資料欄位',
-  `value` varchar(200) NOT NULL COMMENT '值',
-  `note` text NOT NULL COMMENT '備註'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='註解';
-
---
--- 傾印資料表的資料 `annotation`
---
-
-INSERT INTO `annotation` (`table`, `column`, `value`, `note`) VALUES
-('product_detail', 'name', 'IMG', '當 product_details 的 name 設為 IMG 時，表示 value 值代表商品圖片的陣列。\n應使用 JSON 陣列表示一個或多個圖片。'),
-('product_details', 'name', 'INFO', '當 product_details 的 name 設為 INFO 時，表示 value 值代表商品的簡介。');
-
--- --------------------------------------------------------
-
---
 -- 資料表結構 `files`
 --
 

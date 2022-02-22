@@ -1,12 +1,12 @@
-import mysql from "./mysql";
+import mysql from "mysql";
 
 import files from "./files";
 import products from "./products";
 import users from "./users";
 
-const DBhost = process.env.DBHOST ?? 'http://203.68.249.7/shinnan/sql.php';
+const DBhost = process.env.DBHOST ?? 'localhost';
 const DBaccount = process.env.DBACCOUNT ?? 'root';
-const DBpassword = process.env.DBPASSWORD ?? '1qaz@WSX3edc';
+const DBpassword = process.env.DBPASSWORD ?? '';
 const DBname = process.env.DBNAME ?? 'shinnanfarm';
 
 const connection = mysql.createConnection( {

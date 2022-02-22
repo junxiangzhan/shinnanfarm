@@ -324,7 +324,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
 /* harmony export */   "routes": () => (/* binding */ routes)
 /* harmony export */ });
-/* harmony import */ var _mysql__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./mysql */ "./src/apis/mysql/index.js");
+/* harmony import */ var mysql__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! mysql */ "mysql");
+/* harmony import */ var mysql__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(mysql__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _files__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./files */ "./src/apis/files/index.js");
 /* harmony import */ var _products__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./products */ "./src/apis/products/index.js");
 /* harmony import */ var _users__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./users */ "./src/apis/users/index.js");
@@ -332,11 +333,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const DBhost = process.env.DBHOST ?? 'http://203.68.249.7/shinnan/sql.php';
+const DBhost = process.env.DBHOST ?? 'localhost';
 const DBaccount = process.env.DBACCOUNT ?? 'root';
-const DBpassword = process.env.DBPASSWORD ?? '1qaz@WSX3edc';
+const DBpassword = process.env.DBPASSWORD ?? '';
 const DBname = process.env.DBNAME ?? 'shinnanfarm';
-const connection = _mysql__WEBPACK_IMPORTED_MODULE_0__["default"].createConnection({
+const connection = mysql__WEBPACK_IMPORTED_MODULE_0___default().createConnection({
   host: DBhost,
   user: DBaccount,
   password: DBpassword,
@@ -367,130 +368,6 @@ const routes = ['/api', '/api/:api', '/api/:api/:name', '/api/*'];
 
 /***/ }),
 
-/***/ "./src/apis/mysql/index.js":
-/*!*********************************!*\
-  !*** ./src/apis/mysql/index.js ***!
-  \*********************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "axios");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-
-const types = {
-  [["VAR_STRING", "STRING"]]: String,
-  [["TINY", "SHORT", "LONG", "LONGLONG", "INT24", "DOUBLE"]]: Number,
-  [["DATETIME", "DATE", "TIMESTAMP"]]: Date,
-  [["BLOB"]]: Buffer.from
-};
-const errorCodes = {};
-
-class Connection {
-  #connectConfigs;
-  #afterFatalError = false;
-
-  constructor(configs) {
-    const defaultConfigs = {
-      connectTimeout: 1e4
-    };
-    this.#connectConfigs = Object.assign(defaultConfigs, configs);
-    this.query = this.query.bind(this);
-  }
-
-  get configs() {
-    return this.#connectConfigs;
-  }
-
-  query(queryString, values, callback) {
-    const {
-      configs: {
-        host,
-        ...connectionConfigs
-      }
-    } = this;
-    const queryObject = {
-      queryString,
-      values,
-      callback
-    };
-
-    const OnFatalErrorHappen = function () {
-      this.#afterFatalError = true;
-    }.bind(this);
-
-    const promise = new Promise(function (resolve, reject) {
-      const request = axios__WEBPACK_IMPORTED_MODULE_0___default().request({
-        url: host,
-        method: "post",
-        data: {
-          connection: JSON.stringify(connectionConfigs),
-          query: JSON.stringify({
-            queryString,
-            values
-          })
-        }
-      }).then(function ({
-        data: result
-      }) {
-        return result.error ? reject(result.error) : resolve(result);
-      }).catch(function (reason) {
-        return reject({
-          errorInfo: reason,
-          isFatal: true
-        });
-      });
-    }).then(function (result) {
-      const {
-        results: datarows,
-        fields
-      } = result;
-      const results = [];
-
-      for (let row of datarows || []) {
-        const result = {};
-
-        for (let field of fields) {
-          const {
-            name,
-            native_type
-          } = field;
-
-          for (let [nativeTypes, method] of Object.entries(types)) {
-            if (nativeTypes.includes(native_type)) {
-              result[name] = method(row[name]);
-              break;
-            }
-          }
-        }
-
-        results.push(result);
-      }
-
-      if (callback instanceof Function) callback(null, results, fields);
-      return result;
-    }).catch(function (error) {
-      console.log(error);
-      if (callback instanceof Function) callback(error);
-      if (error?.isFatal) OnFatalErrorHappen();
-    });
-    return queryObject;
-  }
-
-}
-
-const mysql = {
-  createConnection(configs) {
-    return new Connection(configs);
-  }
-
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (mysql);
-
-/***/ }),
-
 /***/ "./src/apis/products/all.js":
 /*!**********************************!*\
   !*** ./src/apis/products/all.js ***!
@@ -507,6 +384,7 @@ function all(req, res, conn) {
   } = req.body ?? {};
   const queryString = `SELECT \`products\`.\`name\`, \`products\`.\`price\`, \`products\`.\`stock\`, \`product_details\`.\`value\` AS \`images\` FROM \`products\` LEFT OUTER JOIN \`product_details\` ON \`products\`.\`id\` = \`product_details\`.\`product_id\` WHERE ( \`product_details\`.\`name\` = "IMG" OR \`product_details\`.\`name\` IS NULL )${includeAll ? '' : ' AND `products`.`released`'} ORDER BY \`products\`.\`id\`;`;
   conn.query(queryString, [], function (err, results) {
+    console.log(err);
     if (err) return res.send({
       type: 'error',
       reason: err
@@ -1052,14 +930,7 @@ class Footer extends (react__WEBPACK_IMPORTED_MODULE_0___default().Component) {
       to: "/news"
     }, "\u6700\u65B0\u6D88\u606F - News")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link, {
       to: "/market"
-    }, "\u7DDA\u4E0A\u5546\u5E97 - Market")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-      style: {
-        padding: "1rem"
-      }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h4", null, "\u5C08\u984C\u4ECB\u7D39"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("ul", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("a", {
-      href: "/AIweb",
-      target: "_blank"
-    }, "\u5C08\u984C\u4ECB\u7D39\u7DB2\u7AD9"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    }, "\u7DDA\u4E0A\u5546\u5E97 - Market"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
       style: {
         padding: "1rem"
       }
@@ -1071,13 +942,10 @@ class Footer extends (react__WEBPACK_IMPORTED_MODULE_0___default().Component) {
       style: {
         padding: "1rem"
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h4", null, "\u76F8\u95DC\u9023\u7D50"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("ul", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("a", {
-      href: "https://www.tanosecure.com.tw/"
-    }, "\u5929\u9F8D\u5B89\u5168\u79D1\u6280\u5B98\u5206\u7DB2\u7AD9")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("a", {
-      href: "https://www.facebook.com/ProfessorPlanted/"
-    }, "\u535A\u58EB\u7A2E\u7684 Facebook \u7C89\u7D72\u5C08\u9801")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("a", {
-      href: "https://www.facebook.com/\u65B0\u5357\u8FB2\u5712-1234272356657626/"
-    }, "\u65B0\u5357\u8FB2\u5712 Facebook \u7C89\u7D72\u5C08\u9801")))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h4", null, "\u5C08\u984C\u4ECB\u7D39"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("ul", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("a", {
+      href: "/AIweb",
+      target: "_blank"
+    }, "\u5C08\u984C\u4ECB\u7D39\u7DB2\u7AD9")))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
       className: "copyright"
     }, "Copyright \xA9 2021, All rights reserved."));
   }
@@ -2727,6 +2595,16 @@ module.exports = require("express");
 /***/ ((module) => {
 
 module.exports = require("express-fileupload");
+
+/***/ }),
+
+/***/ "mysql":
+/*!************************!*\
+  !*** external "mysql" ***!
+  \************************/
+/***/ ((module) => {
+
+module.exports = require("mysql");
 
 /***/ }),
 
